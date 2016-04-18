@@ -11,6 +11,7 @@
 #include "../../characters/saiyans/Vegeta.h"
 #include "../../linkedlist/LinkedList.h"
 #include "VersusScreen.h"
+#include "AttackSequence.h"
 
 class BattleLoop : public GameSequence {
 
@@ -29,15 +30,22 @@ public:
     void restart();
 
 protected:
+    void onNewPhase(Phase phase);
     virtual void checkCharacterStatus(Character *character);
 
     int numCharacters;
     int characterIndex;
     LinkedList<Character> characters;
+
+private:
+    AttackSequence* attackSequence = nullptr;
+    LinkedList<Phase>* phases;
 };
 
 void BattleLoop::begin() {
     GameSequence::begin();
+
+    phases = new LinkedList<Phase>();
 
     VersusScreen versusScreen(characters);
     versusScreen.begin();
@@ -52,6 +60,9 @@ void BattleLoop::end() {
 void BattleLoop::goToNextCharacter() {
     if (characterIndex == numCharacters - 1) {
         characterIndex = 0;
+        attackSequence = new AttackSequence(phases,&characters);
+        attackSequence->begin();
+        phases->clear();
     }
     else {
         characterIndex += 1;
@@ -82,6 +93,10 @@ void BattleLoop::restart() {
     }
     characterIndex = -1;
     begin();
+}
+
+void BattleLoop::onNewPhase(Phase phase) {
+    phases->add(phase);
 }
 
 

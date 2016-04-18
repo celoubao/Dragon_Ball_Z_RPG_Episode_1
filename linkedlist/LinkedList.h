@@ -45,6 +45,8 @@ public:
     // Returns the size of the LinkedList
     int getSize();
 
+    void clear();
+
 private:
     // Backend
     Iterator<T> *iterator;
@@ -113,6 +115,13 @@ void LinkedList<T>::set(int index, T value) {
         ptr->setValue(value);
     }
     iterator->resetPosition();
+}
+
+template<class T>
+void LinkedList<T>::clear() {
+    delete(this->iterator);
+    this->iterator = new Iterator<T>();
+    size = 0;
 }
 
 

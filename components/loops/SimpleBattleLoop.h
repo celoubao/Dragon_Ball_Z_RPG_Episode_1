@@ -17,6 +17,7 @@
 #include "../../characters/saiyans/Vegeta.h"
 #include "../moves/RandomMove.h"
 #include "../GameData.h"
+#include "AttackSequence.h"
 
 using namespace std;
 using namespace game;
@@ -39,9 +40,10 @@ public:
 
     void displayCharacterState(Character &character);
 
-    void selectMove(Character &pCharacter);
+    void selectMove(Character &user);
 
     int selectTarget(Character &character);
+
 };
 
 void SimpleBattleLoop::begin() {
@@ -85,53 +87,32 @@ void SimpleBattleLoop::displayCharacterState(Character &character) {
 
 }
 
-void SimpleBattleLoop::selectMove(Character &pCharacter) {
+void SimpleBattleLoop::selectMove(Character &user) {
     int moveIndex;
 
     do {
-        moveIndex = selectMoveForCharacter(pCharacter);
+        moveIndex = selectMoveForCharacter(user);
     }
     while(moveIndex == -1);
 
-    int targetIndex = 0;
-
+    Character target;
     Move* selectedMove = moves.get(moveIndex);
 
+    int targetIndex = -1;
+
     if(selectedMove->needsTarget()) {
-        do {
-            targetIndex = selectTarget(pCharacter);
-        } while (targetIndex >= characters.getSize() || targetIndex < 0 || targetIndex == characterIndex);
-
-        Character target = characters.get(targetIndex);
-
-        cout << pCharacter.getName() << " is attacking " << target.getName() << "!";
-        waitForUser();
-
-        if(selectedMove->getKiUsage() > pCharacter.getActualKI()) {
-            cout << pCharacter.getName() << " tried to use " << selectedMove->getName() << " but it failed!" << endl;
-        }
-        else {
-            selectedMove->use(&pCharacter, &target);
-            characters.set(characterIndex, pCharacter);
-            characters.set(targetIndex, target);
-        }
-        waitForUser();
-
-        if (target.getActualHP() <= 0) {
-            cout << target.getName() << " fainted!";
-            waitForUser();
-            cout << pCharacter.getName() << " won !";
-            waitForUser();
-
-            end();
-            return;
-        }
+        targetIndex = selectTarget(user);
+        target = characters.get(targetIndex);
     }
-    else {
-        selectedMove->use(&pCharacter, &pCharacter);
-        characters.set(characterIndex, pCharacter);
-        waitForUser();
-    }
+
+    Phase phase;
+    phase.move = selectedMove;
+    phase.user = &user;
+    phase.targetIndex = targetIndex;
+    phase.userIndex = characterIndex;
+    phase.target = &target;
+
+    onNewPhase(phase);
 
     goToNextCharacter();
 }

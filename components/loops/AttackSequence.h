@@ -8,57 +8,71 @@
 
 #include "GameSequence.h"
 #include "../Move.h"
+#include "../../linkedlist/LinkedList.h"
 
 struct Phase {
-    Move move;
-    Character target;
-    Character user;
+    Move* move;
+    Character* target;
+    Character* user;
+    int userIndex;
+    int targetIndex;
 };
 
 class AttackSequence: public GameSequence {
 public:
-    AttackSequence(Phase phases[]);
+    AttackSequence(LinkedList<Phase>* phases, LinkedList<Character>* characters);
     virtual void begin();
     virtual void end();
 private:
-    Phase phases[];
+    LinkedList<Character>* characters;
+    LinkedList<Phase>* phases;
 };
 
-AttackSequence::AttackSequence(Phase *phases) {
+AttackSequence::AttackSequence(LinkedList<Phase>* phases, LinkedList<Character>* characters) {
     this->phases = phases;
+    this->characters = characters;
 }
 
 void AttackSequence::begin() {
     GameSequence::begin();
 
-    for(Phase phase: phases) {
 
-        Character user = phase.user;
-        Character target = phase.target;
-        Move move = phase.move;
+    Phase phase;
+    for(int i = 0; i < phases->getSize(); i++) {
 
-        if(move.needsTarget()) {
-            cout << user.getName() << " is attacking " << target.getName() << "!";
+        phase = phases->get(i);
+
+        Character* user = phase.user;
+        Character* target = phase.target;
+        Move* move  = phase.move;
+
+        if(phase.move->needsTarget()) {
+            cout << user->getName() << " is attacking " << target->getName() << "!";
             waitForUser();
 
-            if(move.getKiUsage() > user.getActualKI()) {
-                cout << user.getName() << " tried to use " << move.getName() << " but it failed!" << endl;
+            if(move->getKiUsage() > user->getActualKI()) {
+                cout << user->getName() << " tried to use " << move->getName() << " but it failed!" << endl;
             }
             else {
-                move.use(&user, &target);;
+                move->use(user, target);;
             }
 
             waitForUser();
 
-            if (target.getActualHP() <= 0) {
-                cout << target.getName() << " fainted!";
+            if (target->getActualHP() <= 0) {
+                cout << target->getName() << " fainted!";
                 waitForUser();
             }
         }
         else {
-            move.use(&user, &target);
+            move->use(user, target);
         }
-        waitForUser();
+
+        characters->set(phase.userIndex, *user);
+        if(phase.targetIndex != -1) {
+            characters->set(phase.targetIndex, *target);
+        }
+
     }
     end();
 }
