@@ -8,53 +8,54 @@
 
 #include "GameSequence.h"
 #include "../Move.h"
-#include "../../linkedlist/LinkedList.h"
 
 struct Phase {
-    Move* move;
-    Character* target;
-    Character* user;
+    Move *move;
+    Character *target;
+    Character *user;
     int userIndex;
     int targetIndex;
 };
 
-class AttackSequence: public GameSequence {
+class AttackSequence : public GameSequence {
 public:
-    AttackSequence(LinkedList<Phase>* phases, LinkedList<Character>* characters);
+    AttackSequence(vector<Phase> &phases, vector<Character> &characters);
+
     virtual void begin();
+
     virtual void end();
+
 private:
-    LinkedList<Character>* characters;
-    LinkedList<Phase>* phases;
+    vector<Character> *characters;
+    vector<Phase> *phases;
 };
 
-AttackSequence::AttackSequence(LinkedList<Phase>* phases, LinkedList<Character>* characters) {
-    this->phases = phases;
-    this->characters = characters;
+AttackSequence::AttackSequence(vector<Phase> &phases, vector<Character> &characters) {
+    this->phases = &phases;
+    this->characters = &characters;
 }
 
 void AttackSequence::begin() {
     GameSequence::begin();
 
-    Phase phase;
-
     cout << endl;
 
-    for(int i = 0; i < phases->getSize(); i++) {
+    Phase phase;
+    for (int i = 0; i < phases->size(); i++) {
 
-        phase = phases->get(i);
+        phase = phases->at(i);
 
-        Character* user = phase.user;
-        Character* target = phase.target;
-        Move* move  = phase.move;
+        Character *user = phase.user;
+        Character *target = phase.target;
+        Move *move = phase.move;
 
-        if(phase.move->needsTarget()) {
+        if (phase.move->needsTarget()) {
             cout << user->getName() << " is attacking " << target->getName() << "!" << endl;
-            if(move->getKiUsage() > user->getActualKI()) {
+            if (move->getKiUsage() > user->getActualKI()) {
                 cout << user->getName() << " tried to use " << move->getName() << " but it failed!" << endl;
             }
             else {
-                move->use(user, target);;
+                move->use(user, target);
             }
 
             waitForUser();
@@ -71,12 +72,12 @@ void AttackSequence::begin() {
 
         cout << endl;
 
-        characters->set(phase.userIndex, *user);
-        if(phase.targetIndex != -1) {
-            characters->set(phase.targetIndex, *target);
+        user->setActualKI(user->getActualKI() + user->getBonusKIPoints());
+
+        characters->at(phase.userIndex) = *user;
+        if (phase.targetIndex != -1) {
+            characters->at(phase.targetIndex) = *target;
         }
-
-
     }
     end();
 }

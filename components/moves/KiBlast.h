@@ -8,7 +8,7 @@
 
 #include "../Move.h"
 
-class KiBlast:  public PhysicalMove {
+class KiBlast:  public DamageMove {
 public:
     KiBlast() {
         name = "Ki Blast";
@@ -18,14 +18,14 @@ public:
     virtual void use(Character *user, Character *target);
 
 protected:
-    virtual float getPhysicalDamagePoints();
+    virtual float getDamagePoints();
 };
 
 void KiBlast::use(Character *user, Character *target) {
-    PhysicalMove::use(user, target);
+    DamageMove::use(user, target);
 }
 
-float KiBlast::getPhysicalDamagePoints() {
+float KiBlast::getDamagePoints() {
     return LIFE_BAR / 4;
 }
 

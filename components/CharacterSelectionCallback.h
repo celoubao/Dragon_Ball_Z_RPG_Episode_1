@@ -6,14 +6,13 @@
 #define DRAGON_BALL_Z_RPG_EDITION_CHARACTERSELECTIONCALLBACK_H
 
 #include "Character.h"
-#include "../linkedlist/LinkedList.h"
 
 class CharacterSelectionCallback {
 public:
-    virtual void onCharacterListReady(LinkedList<Character*> characters);
+    virtual void onCharacterListReady(vector<Character*> characters);
 };
 
-void CharacterSelectionCallback::onCharacterListReady(LinkedList<Character *> characters) {
+void CharacterSelectionCallback::onCharacterListReady(vector<Character *> characters) {
 
 }
 

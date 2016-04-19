@@ -25,7 +25,7 @@ using namespace game;
 class SimpleBattleLoop : public BattleLoop {
 
 public:
-    SimpleBattleLoop(LinkedList<Character> characters) : BattleLoop(characters) {
+    SimpleBattleLoop(vector<Character> &characters) : BattleLoop(characters) {
     }
 
     virtual void begin();
@@ -61,7 +61,7 @@ void SimpleBattleLoop::goToNextCharacter() {
 void SimpleBattleLoop::onNext(int index) {
     clearScreen();
     BattleLoop::onNext(index);
-    getUserInput(characters.get(index));
+    getUserInput(characters[index]);
 }
 
 void SimpleBattleLoop::getUserInput(Character character) {
@@ -70,9 +70,9 @@ void SimpleBattleLoop::getUserInput(Character character) {
 
 void SimpleBattleLoop::displayCharacterState(Character &character) {
     cout << setw(20) << setfill('*') << " " << endl;
-    for (int i = 0; i < characters.getSize(); ++i) {
-        cout << characters.get(i).getName();
-        if (i != characters.getSize() - 1) {
+    for (int i = 0; i < characters.size(); ++i) {
+        cout << characters[i].getName();
+        if (i != characters.size() - 1) {
             cout << " VS ";
         }
     }
@@ -97,14 +97,14 @@ void SimpleBattleLoop::selectMove(Character &user) {
     while (moveIndex == -1);
 
     Character target;
-    Move *selectedMove = moves.get(moveIndex);
+    Move *selectedMove = moves[(moveIndex)];
 
     int targetIndex = -1;
 
     if (selectedMove->needsTarget()) {
         do {
             targetIndex = selectTarget(user);
-            target = characters.get(targetIndex);
+            target = characters[targetIndex];
             if (targetIndex == characterIndex) {
                 cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
                 targetIndex = -1;
@@ -132,7 +132,7 @@ int SimpleBattleLoop::selectTarget(Character &character) {
 
     cout << "Select target" << endl;
 
-    for (int i = 0; i < characters.getSize(); i++) {
+    for (int i = 0; i < characters.size(); i++) {
 
         cout << i << " | ";
 
@@ -140,7 +140,7 @@ int SimpleBattleLoop::selectTarget(Character &character) {
             cout << "(You) ";
         }
 
-        cout << characters.get(i).getName() << endl;
+        cout << characters[i].getName() << endl;
     }
     cout << setw(20) << setfill('*') << " " << endl;
     cout << "Enter value: ";

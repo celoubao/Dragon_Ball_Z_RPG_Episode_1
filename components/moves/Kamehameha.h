@@ -8,7 +8,7 @@
 #include "../Character.h"
 #include "../Move.h"
 
-class Kamehameha : public PhysicalMove {
+class Kamehameha : public DamageMove {
 public:
     Kamehameha() {
         name = "Kamehameha";
@@ -18,14 +18,14 @@ public:
     virtual void use(Character *user, Character *target);
 
 protected:
-    virtual float getPhysicalDamagePoints();
+    virtual float getDamagePoints();
 };
 
 void Kamehameha::use(Character *user, Character *target) {
-    PhysicalMove::use(user, target);
+    DamageMove::use(user, target);
 }
 
-float Kamehameha::getPhysicalDamagePoints() {
+float Kamehameha::getDamagePoints() {
     return LIFE_BAR / 3;
 }
 

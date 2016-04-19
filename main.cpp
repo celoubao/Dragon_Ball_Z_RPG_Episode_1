@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void startBattleLoop(LinkedList<Character*> characters);
+void startBattleLoop(vector<Character *> characters);
 
 int main() {
     game::initializeGameData();
@@ -26,11 +26,11 @@ int main() {
     return 0;
 }
 
-void startBattleLoop(LinkedList<Character*> characters) {
+void startBattleLoop(vector<Character *> characters) {
 
-    LinkedList<Character> chars;
-    for(int i = 0; i < characters.getSize(); i++) {
-        chars.add(*characters.get(i));
+    vector<Character> chars;
+    for (int i = 0; i < characters.size(); i++) {
+        chars.push_back(*characters[(i)]);
     }
 
     SimpleBattleLoop battleLoop(chars);

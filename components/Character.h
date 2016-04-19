@@ -9,6 +9,24 @@ using namespace std;
 static const int LIFE_BAR = 1000;
 static const int KI_BAR = 500;
 
+/**
+ * Character Specifications:
+ *
+ * - Health Points (HP):    Represents the "life" of a character. When the HP equal 0 the character is considered "dead"
+ *
+ * - Attack:                A value between 0 and 1. Is a percentage of the base damage points of a Move (See Move.h)
+ *                          that will be added to the move's damage points when used by this character.
+ *
+ * - Defense:               A value between 0 and 1. Is a percentage of the base damage points of a Move (See Move.h)
+ *                          that will be subtracted from the moves's damage points calculated when taking damages
+ *
+ * - KI:                    Represent's the amount of energy a character has. Some moves requires a certain amount of KI
+ *                          to be used. If the user attempt to use a move that requires more KI than his/her character has
+ *                          the move will fail.
+ *
+ * - Bonus KI Points:       Amount of KI points that are added to the character's current KI points at the end of each turn
+ *                          This value may vary depending on the character
+ */
 class Character {
 protected:
     void setMaxHP(long maxHP);
@@ -21,6 +39,8 @@ protected:
 
     void setAttack(float APS);
 
+    void setBonusKIPoints(long bonusKIPoints);
+
 
 public:
     Character();
@@ -30,6 +50,8 @@ public:
     void setActualKI(long ki);
 
     long getMaxKI();
+
+    long getBonusKIPoints();
 
     long getActualHP();
 
@@ -52,6 +74,7 @@ private:
 
     long actualKI = KI_BAR;
     long maxKI;
+    long bonusKiPoints;
 
     float defense;
     float attack;
@@ -132,6 +155,14 @@ void Character::setMaxKI(long maxKI) {
 
 long Character::getMaxKI() {
     return this->maxKI;
+}
+
+long Character::getBonusKIPoints() {
+    return bonusKiPoints;
+}
+
+void Character::setBonusKIPoints(long bonusKIPoints) {
+    this->bonusKiPoints = bonusKIPoints;
 }
 
 

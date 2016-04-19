@@ -14,8 +14,11 @@ using namespace std;
 class Move {
 public:
     virtual void use(Character *user, Character *target);
+
     virtual bool needsTarget();
+
     virtual long getKiUsage();
+
     string getName();
 
 protected:
@@ -29,7 +32,7 @@ string Move::getName() {
 
 void Move::use(Character *user, Character *target) {
     cout << user->getName() << " used " << name << "!" << endl;
-    if(kiUsage > 0) {
+    if (kiUsage > 0) {
         double remainingKI = user->getActualKI() - (kiUsage);
         user->setActualKI((long) remainingKI);
     }
@@ -43,32 +46,37 @@ bool Move::needsTarget() {
     return true;
 }
 
-
 /**
- * A physical damage move is a move that affects the receiver's HP
+ * A Damage Move is a move that affects the target's HP
  */
-class PhysicalMove : public Move {
+class DamageMove : public Move {
 public:
     virtual void use(Character *user, Character *target);
 
 protected:
-    virtual float getPhysicalDamagePoints();
+    virtual float getDamagePoints();
 };
 
-void PhysicalMove::use(Character *user, Character *target) {
-    float physicalDamagePoints = getPhysicalDamagePoints();
+void DamageMove::use(Character *user, Character *target) {
     Move::use(user, target);
-    float baseDamagePoints = physicalDamagePoints + (physicalDamagePoints * user->getAttack());
 
-    double damagePoints = baseDamagePoints - (baseDamagePoints * (target->getDefense()));
+    // We calculate the max damage the target is going to take;
+    float initialDamagePoints = getDamagePoints();
+    float damageBonus = initialDamagePoints * user->getAttack();
+    float calculatedDamagePoints = initialDamagePoints + damageBonus;
 
-    if (damagePoints >= LIFE_BAR) {
-        cout << "Critical hit !";
-    }
+    // Then we calculate how many points will be deducted from the damage points
+    float targetDefense = target->getDefense();
+    float damageReduction = calculatedDamagePoints * targetDefense;
+
+    // Finally we subtract the reduction points from the damage points
+    double damagePoints = calculatedDamagePoints - damageReduction;
+
+    // We reduce the target's Health Points
     target->setActualHP(target->getActualHP() - damagePoints);
 }
 
-float PhysicalMove::getPhysicalDamagePoints() {
+float DamageMove::getDamagePoints() {
     return 0;
 }
 

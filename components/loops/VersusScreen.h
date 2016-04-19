@@ -10,18 +10,17 @@
 #include <iomanip>
 #include "GameSequence.h"
 #include "../../include/Terminal.h"
-#include "../../linkedlist/LinkedList.h"
 
 class VersusScreen : public GameSequence {
 public:
-    VersusScreen(LinkedList<Character> characters);
+    VersusScreen(vector<Character> &characters);
 
     virtual void begin();
 
     virtual void end();
 
 private:
-    LinkedList<Character> characters;
+    vector<Character> characters;
 
     void displayCharacters();
 };
@@ -45,15 +44,15 @@ void VersusScreen::end() {
     clearScreen();
 }
 
-VersusScreen::VersusScreen(LinkedList<Character> characters) {
+VersusScreen::VersusScreen(vector<Character> &characters) {
     this->characters = characters;
 }
 
 void VersusScreen::displayCharacters() {
     cout << setw(20) << setfill('*') << " " << endl;
-    for (int i = 0; i < characters.getSize(); ++i) {
-        cout << characters.get(i).getName();
-        if (i != characters.getSize() - 1) {
+    for (int i = 0; i < characters.size(); ++i) {
+        cout << characters[i].getName();
+        if (i != characters.size() - 1) {
             cout << " VS ";
         }
     }

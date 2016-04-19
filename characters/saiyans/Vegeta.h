@@ -7,15 +7,13 @@
 
 #include "../Saiyan.h"
 
-static const long VEGETA_ID = 2;
-
-
 class Vegeta : public Saiyan {
 public:
     Vegeta() {
         setName("Vegeta");
         setDefense(0.05);
         setAttack(0.5);
+        setBonusKIPoints(20);
         resetCharacterStats();
     }
 };

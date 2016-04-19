@@ -8,16 +8,16 @@
 
 #include "../Move.h"
 
-class RandomMove : public PhysicalMove {
+class RandomMove : public DamageMove {
 public:
     RandomMove() {
         name = "Random";
     }
 
-    virtual float getPhysicalDamagePoints();
+    virtual float getDamagePoints();
 };
 
-float RandomMove::getPhysicalDamagePoints() {
+float RandomMove::getDamagePoints() {
     int max = LIFE_BAR;
     long damagePoints = ((random() % max) + (random() % max)) / 2;
 

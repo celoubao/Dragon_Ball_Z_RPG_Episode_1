@@ -8,7 +8,6 @@
 
 #include <iostream>
 #include "GameSequence.h"
-#include "../../linkedlist/LinkedList.h"
 #include "../../include/Terminal.h"
 #include "../GameData.h"
 #include "../CharacterSelectionCallback.h"
@@ -18,11 +17,11 @@ public:
     CharacterSelectionScreen(int numCharacters);
     virtual void begin();
     virtual void end();
-    LinkedList<Character*> getCharacters();
+    vector<Character*> getCharacters();
 
 private:
     int numCharacters;
-    LinkedList<Character*> characters;
+    vector<Character*> characters;
 };
 
 CharacterSelectionScreen::CharacterSelectionScreen(int numCharacters) {
@@ -34,7 +33,7 @@ void CharacterSelectionScreen::begin() {
     for(int i = 0; i < numCharacters; i++) {
         clearScreen();
         cout << "Player " << i+1 << " select your Character!" << endl;
-        characters.add(game::selectCharacter());
+        characters.push_back(game::selectCharacter());
     }
     end();
 }
@@ -43,7 +42,7 @@ void CharacterSelectionScreen::end() {
     GameSequence::end();
 }
 
-LinkedList<Character *> CharacterSelectionScreen::getCharacters() {
+vector<Character *> CharacterSelectionScreen::getCharacters() {
     return characters;
 }
 

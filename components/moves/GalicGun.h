@@ -8,7 +8,7 @@
 #include "../Move.h"
 #include "../Character.h"
 
-class GalicGun : public PhysicalMove {
+class GalicGun : public DamageMove {
 public:
     GalicGun() {
         name = "Galic Gun";
@@ -18,14 +18,14 @@ public:
     virtual void use(Character *user, Character *target);
 
 protected:
-    virtual float getPhysicalDamagePoints();
+    virtual float getDamagePoints();
 };
 
 void GalicGun::use(Character *user, Character *target) {
-    PhysicalMove::use(user, target);
+    DamageMove::use(user, target);
 }
 
-float GalicGun::getPhysicalDamagePoints() {
+float GalicGun::getDamagePoints() {
     return LIFE_BAR / 3;
 }
 

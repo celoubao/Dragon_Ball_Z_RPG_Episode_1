@@ -6,10 +6,10 @@
 #define BATTLELOOP_H
 
 #include <iostream>
+#include <vector>
 #include "GameSequence.h"
 #include "../Character.h"
 #include "../../characters/saiyans/Vegeta.h"
-#include "../../linkedlist/LinkedList.h"
 #include "VersusScreen.h"
 #include "AttackSequence.h"
 
@@ -17,7 +17,7 @@ class BattleLoop : public GameSequence {
 
 public:
 
-    BattleLoop(LinkedList<Character> characters);
+    BattleLoop(vector <Character> &characters);
 
     virtual void begin();
 
@@ -31,21 +31,20 @@ public:
 
 protected:
     void onNewPhase(Phase phase);
+
     virtual void checkCharacterStatus(Character *character);
 
-    int numCharacters;
+    long numCharacters;
     int characterIndex;
-    LinkedList<Character> characters;
+    vector <Character> characters;
 
 private:
-    AttackSequence* attackSequence = nullptr;
-    LinkedList<Phase>* phases;
+    AttackSequence *attackSequence = nullptr;
+    vector <Phase> phases;
 };
 
 void BattleLoop::begin() {
     GameSequence::begin();
-
-    phases = new LinkedList<Phase>();
 
     VersusScreen versusScreen(characters);
     versusScreen.begin();
@@ -60,9 +59,14 @@ void BattleLoop::end() {
 void BattleLoop::goToNextCharacter() {
     if (characterIndex == numCharacters - 1) {
         characterIndex = 0;
-        attackSequence = new AttackSequence(phases,&characters);
+        attackSequence = new AttackSequence(phases, characters);
         attackSequence->begin();
-        phases->clear();
+        phases.clear();
+
+        for (int i = 0; i < characters.size(); ++i) {
+            cout << characters[i].getActualHP() << endl;
+            waitForUser();
+        }
     }
     else {
         characterIndex += 1;
@@ -79,24 +83,24 @@ void BattleLoop::onNext(int index) {
 void BattleLoop::checkCharacterStatus(Character *character) {
 }
 
-BattleLoop::BattleLoop(LinkedList<Character> characters) {
-    this->numCharacters = characters.getSize();
+BattleLoop::BattleLoop(vector <Character> &characters) {
+    this->numCharacters = characters.size();
     this->characterIndex = -1;
     this->characters = characters;
 }
 
 void BattleLoop::restart() {
-    for (int i = 0; i < characters.getSize(); ++i) {
-        Character character = characters.get(i);
+    for (int i = 0; i < characters.size(); ++i) {
+        Character character = characters[i];
         character.resetCharacterStats();
-        characters.set(i, character);
+        characters[i] = character;
     }
     characterIndex = -1;
     begin();
 }
 
 void BattleLoop::onNewPhase(Phase phase) {
-    phases->add(phase);
+    phases.push_back(phase);
 }
 
 

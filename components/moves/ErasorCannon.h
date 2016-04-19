@@ -8,7 +8,7 @@
 #include "../Move.h"
 #include "../Character.h"
 
-class EraserCannon : public PhysicalMove {
+class EraserCannon : public DamageMove {
 public:
     EraserCannon() {
         name = "Eraser Cannon";
@@ -18,14 +18,14 @@ public:
     virtual void use(Character *user, Character *target);
 
 public:
-    virtual float getPhysicalDamagePoints();
+    virtual float getDamagePoints();
 };
 
 void EraserCannon::use(Character *user, Character *target) {
-    PhysicalMove::use(user, target);
+    DamageMove::use(user, target);
 }
 
-float EraserCannon::getPhysicalDamagePoints() {
+float EraserCannon::getDamagePoints() {
     return LIFE_BAR;
 }
 
