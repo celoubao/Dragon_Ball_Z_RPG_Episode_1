@@ -36,8 +36,10 @@ AttackSequence::AttackSequence(LinkedList<Phase>* phases, LinkedList<Character>*
 void AttackSequence::begin() {
     GameSequence::begin();
 
-
     Phase phase;
+
+    cout << endl;
+
     for(int i = 0; i < phases->getSize(); i++) {
 
         phase = phases->get(i);
@@ -47,9 +49,7 @@ void AttackSequence::begin() {
         Move* move  = phase.move;
 
         if(phase.move->needsTarget()) {
-            cout << user->getName() << " is attacking " << target->getName() << "!";
-            waitForUser();
-
+            cout << user->getName() << " is attacking " << target->getName() << "!" << endl;
             if(move->getKiUsage() > user->getActualKI()) {
                 cout << user->getName() << " tried to use " << move->getName() << " but it failed!" << endl;
             }
@@ -66,12 +66,16 @@ void AttackSequence::begin() {
         }
         else {
             move->use(user, target);
+            waitForUser();
         }
+
+        cout << endl;
 
         characters->set(phase.userIndex, *user);
         if(phase.targetIndex != -1) {
             characters->set(phase.targetIndex, *target);
         }
+
 
     }
     end();

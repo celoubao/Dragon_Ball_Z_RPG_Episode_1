@@ -65,7 +65,6 @@ void SimpleBattleLoop::onNext(int index) {
 }
 
 void SimpleBattleLoop::getUserInput(Character character) {
-    displayCharacterState(character);
     selectMove(character);
 }
 
@@ -91,18 +90,27 @@ void SimpleBattleLoop::selectMove(Character &user) {
     int moveIndex;
 
     do {
+        clearScreen();
+        displayCharacterState(user);
         moveIndex = selectMoveForCharacter(user);
     }
-    while(moveIndex == -1);
+    while (moveIndex == -1);
 
     Character target;
-    Move* selectedMove = moves.get(moveIndex);
+    Move *selectedMove = moves.get(moveIndex);
 
     int targetIndex = -1;
 
-    if(selectedMove->needsTarget()) {
-        targetIndex = selectTarget(user);
-        target = characters.get(targetIndex);
+    if (selectedMove->needsTarget()) {
+        do {
+            targetIndex = selectTarget(user);
+            target = characters.get(targetIndex);
+            if (targetIndex == characterIndex) {
+                cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
+                targetIndex = -1;
+                waitForUser();
+            }
+        } while (targetIndex == -1);
     }
 
     Phase phase;
@@ -134,7 +142,8 @@ int SimpleBattleLoop::selectTarget(Character &character) {
 
         cout << characters.get(i).getName() << endl;
     }
-
+    cout << setw(20) << setfill('*') << " " << endl;
+    cout << "Enter value: ";
     string input = getString();
     try {
         return stoi(input);
@@ -143,7 +152,6 @@ int SimpleBattleLoop::selectTarget(Character &character) {
         return selectTarget(character);
     }
 }
-
 
 
 #endif //SIMPLE_BATTLE_LOOP_H

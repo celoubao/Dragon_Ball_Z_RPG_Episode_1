@@ -91,7 +91,7 @@ namespace game {
         cout << setw(20) << setfill('*') << " " << endl;
 
         cout << "Select a move: ";
-        cin >> moveIndex;
+        moveIndex= getInt();
         return moveIndex < 0 || moveIndex >= moveSet.getSize() ? -1 : moveSet.get(moveIndex);
     }
 

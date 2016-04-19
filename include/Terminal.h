@@ -31,6 +31,7 @@ void clearScreen() {
 #endif
 
 void waitForUser() {
+    cout << "Press ENTER to continue";
     getString();
 }
 
@@ -41,9 +42,12 @@ string getString() {
 }
 
 int getInt() {
-    int input;
-    cin >> input;
-    return input;
+    try {
+        return stoi(getString());
+    }
+    catch (std::invalid_argument e) {
+        return -1;
+    }
 }
 
 #endif //TERMINAL_H

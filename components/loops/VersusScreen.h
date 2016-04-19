@@ -34,8 +34,6 @@ void VersusScreen::begin() {
     clearScreen();
     displayCharacters();
 
-    cout << "Fight !" << endl;
-    cout << "Press ENTER";
     waitForUser();
 
     end();
@@ -59,8 +57,7 @@ void VersusScreen::displayCharacters() {
             cout << " VS ";
         }
     }
-    cout << setw(20) << setfill('*') << " " << endl;
-    cout << endl;
+    cout << endl << setw(20) << setfill('*') << " " << endl;
 }
 
 
