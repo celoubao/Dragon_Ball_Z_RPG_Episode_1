@@ -16,8 +16,8 @@ public:
 
     Goku() {
         setName("Goku");
-        setAttackPoints(0.6);
-        setDefensePoints(0.04);
+        setAttack(0.6);
+        setDefense(0.04);
         resetCharacterStats();
     }
 };

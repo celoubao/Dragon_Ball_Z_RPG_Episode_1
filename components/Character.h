@@ -15,11 +15,11 @@ protected:
 
     void setMaxKI(long maxKI);
 
-    void setDefensePoints(float dps);
+    void setDefense(float defense);
 
     void setName(string name);
 
-    void setAttackPoints(float APS);
+    void setAttack(float APS);
 
 
 public:
@@ -35,9 +35,9 @@ public:
 
     long getMaxHP();
 
-    float getDefensePoints();
+    float getDefense();
 
-    float getAttackBonusPoints();
+    float getAttack();
 
     string getName();
 
@@ -53,8 +53,8 @@ private:
     long actualKI = KI_BAR;
     long maxKI;
 
-    float DPS;
-    float ABS;
+    float defense;
+    float attack;
 };
 
 Character::Character() {
@@ -63,8 +63,8 @@ Character::Character() {
     resetCharacterStats();
 }
 
-void Character::setAttackPoints(float ABS) {
-    this->ABS = ABS;
+void Character::setAttack(float attack) {
+    this->attack = attack;
 }
 
 
@@ -81,8 +81,8 @@ void Character::setMaxHP(long maxHP) {
     this->maxHP = maxHP;
 }
 
-void Character::setDefensePoints(float dps) {
-    this->DPS = dps;
+void Character::setDefense(float defense) {
+    this->defense = defense;
 }
 
 string Character::getName() {
@@ -93,12 +93,12 @@ long Character::getActualHP() {
     return actualHP;
 }
 
-float Character::getDefensePoints() {
-    return DPS;
+float Character::getDefense() {
+    return defense;
 }
 
-float Character::getAttackBonusPoints() {
-    return ABS;
+float Character::getAttack() {
+    return attack;
 }
 
 void Character::setActualHP(double hp) {

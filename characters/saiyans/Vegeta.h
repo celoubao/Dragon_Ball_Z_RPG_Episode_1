@@ -14,8 +14,8 @@ class Vegeta : public Saiyan {
 public:
     Vegeta() {
         setName("Vegeta");
-        setDefensePoints(0.05);
-        setAttackPoints(0.5);
+        setDefense(0.05);
+        setAttack(0.5);
         resetCharacterStats();
     }
 };

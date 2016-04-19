@@ -58,9 +58,9 @@ protected:
 void PhysicalMove::use(Character *user, Character *target) {
     float physicalDamagePoints = getPhysicalDamagePoints();
     Move::use(user, target);
-    float baseDamagePoints = physicalDamagePoints + (physicalDamagePoints * user->getAttackBonusPoints());
+    float baseDamagePoints = physicalDamagePoints + (physicalDamagePoints * user->getAttack());
 
-    double damagePoints = baseDamagePoints - (baseDamagePoints * (target->getDefensePoints()));
+    double damagePoints = baseDamagePoints - (baseDamagePoints * (target->getDefense()));
 
     if (damagePoints >= LIFE_BAR) {
         cout << "Critical hit !";
