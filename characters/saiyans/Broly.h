@@ -13,7 +13,8 @@ public:
         setName("Broly");
         setAttack(0.8);
         setDefense(0.3);
-        setBonusKIPoints(5);
+        setBonusKIPoints(1);
+        setMaxKI(KI_BAR * 2);
         setMaxHP(LIFE_BAR * 5);
         resetCharacterStats();
     }

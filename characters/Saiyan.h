@@ -14,6 +14,7 @@ public:
 };
 
 Saiyan::Saiyan() {
+    setMaxKI(KI_BAR * 4);
     resetCharacterStats();
 }
 
