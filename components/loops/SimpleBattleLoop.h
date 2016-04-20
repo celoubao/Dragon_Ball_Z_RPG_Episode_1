@@ -17,7 +17,6 @@
 #include "../../characters/saiyans/Vegeta.h"
 #include "../moves/RandomMove.h"
 #include "../GameData.h"
-#include "AttackSequence.h"
 
 using namespace std;
 using namespace game;
@@ -36,7 +35,7 @@ public:
 
     virtual void onNext(int index);
 
-    void getUserInput(Character Character);
+    void getUserInput(Character& Character);
 
     void displayCharacterState(Character &character);
 
@@ -64,7 +63,7 @@ void SimpleBattleLoop::onNext(int index) {
     getUserInput(characters[index]);
 }
 
-void SimpleBattleLoop::getUserInput(Character character) {
+void SimpleBattleLoop::getUserInput(Character& character) {
     selectMove(character);
 }
 
@@ -96,7 +95,6 @@ void SimpleBattleLoop::selectMove(Character &user) {
     }
     while (moveIndex == -1);
 
-    Character target;
     Move *selectedMove = moves[(moveIndex)];
 
     int targetIndex = -1;
@@ -104,7 +102,6 @@ void SimpleBattleLoop::selectMove(Character &user) {
     if (selectedMove->needsTarget()) {
         do {
             targetIndex = selectTarget(user);
-            target = characters[targetIndex];
             if (targetIndex == characterIndex) {
                 cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
                 targetIndex = -1;
@@ -113,14 +110,12 @@ void SimpleBattleLoop::selectMove(Character &user) {
         } while (targetIndex == -1);
     }
 
-    Phase phase;
-    phase.move = selectedMove;
-    phase.user = &user;
-    phase.targetIndex = targetIndex;
-    phase.userIndex = characterIndex;
-    phase.target = &target;
+    Phase* phase = new Phase();
+    phase->move = selectedMove;
+    phase->user = &user;
+    phase->target = &characters[targetIndex];
 
-    onNewPhase(phase);
+    onNewPhase(*phase);
 
     goToNextCharacter();
 }

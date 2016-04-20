@@ -137,9 +137,9 @@ long Character::getActualKI() {
 }
 
 void Character::setActualKI(long ki) {
-    if(actualKI < maxKI || ki < maxKI) {
+    if (actualKI < maxKI || ki < maxKI) {
         this->actualKI = ki;
-        if(actualKI >= maxKI) {
+        if (actualKI >= maxKI) {
             actualKI = maxKI;
             cout << getName() << " is in Power Max Mode!" << endl;
         }

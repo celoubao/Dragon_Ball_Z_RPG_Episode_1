@@ -30,7 +30,7 @@ public:
     void restart();
 
 protected:
-    void onNewPhase(Phase phase);
+    void onNewPhase(Phase& phase);
 
     virtual void checkCharacterStatus(Character *character);
 
@@ -60,19 +60,14 @@ void BattleLoop::goToNextCharacter() {
     if (characterIndex == numCharacters - 1) {
         characterIndex = 0;
         attackSequence = new AttackSequence(phases, characters);
-        attackSequence->begin();
-        phases.clear();
 
-        for (int i = 0; i < characters.size(); ++i) {
-            cout << characters[i].getActualHP() << endl;
-            waitForUser();
-        }
+        attackSequence->begin();
+
+        phases.clear();
     }
     else {
         characterIndex += 1;
     }
-    cout << characterIndex << endl;
-    cout << numCharacters << endl;
     onNext(characterIndex);
 }
 
@@ -99,7 +94,7 @@ void BattleLoop::restart() {
     begin();
 }
 
-void BattleLoop::onNewPhase(Phase phase) {
+void BattleLoop::onNewPhase(Phase& phase) {
     phases.push_back(phase);
 }
 

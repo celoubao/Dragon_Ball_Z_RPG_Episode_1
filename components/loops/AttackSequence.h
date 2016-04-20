@@ -13,8 +13,6 @@ struct Phase {
     Move *move;
     Character *target;
     Character *user;
-    int userIndex;
-    int targetIndex;
 };
 
 class AttackSequence : public GameSequence {
@@ -26,13 +24,11 @@ public:
     virtual void end();
 
 private:
-    vector<Character> *characters;
     vector<Phase> *phases;
 };
 
 AttackSequence::AttackSequence(vector<Phase> &phases, vector<Character> &characters) {
     this->phases = &phases;
-    this->characters = &characters;
 }
 
 void AttackSequence::begin() {
@@ -40,44 +36,34 @@ void AttackSequence::begin() {
 
     cout << endl;
 
-    Phase phase;
-    for (int i = 0; i < phases->size(); i++) {
+    for (Phase phase: *phases) {
 
-        phase = phases->at(i);
-
-        Character *user = phase.user;
-        Character *target = phase.target;
         Move *move = phase.move;
 
         if (phase.move->needsTarget()) {
-            cout << user->getName() << " is attacking " << target->getName() << "!" << endl;
-            if (move->getKiUsage() > user->getActualKI()) {
-                cout << user->getName() << " tried to use " << move->getName() << " but it failed!" << endl;
+            cout << phase.user->getName() << " is attacking " << phase.target->getName() << "!" << endl;
+            if (move->getKiUsage() > phase.user->getActualKI()) {
+                cout << phase.user->getName() << " tried to use " << move->getName() << " but it failed!" << endl;
             }
             else {
-                move->use(user, target);
+                move->use(phase.user, phase.target);
             }
 
             waitForUser();
 
-            if (target->getActualHP() <= 0) {
-                cout << target->getName() << " fainted!";
+            if (phase.target->getActualHP() <= 0) {
+                cout << phase.target->getName() << " fainted!";
                 waitForUser();
             }
         }
         else {
-            move->use(user, target);
+            move->use(phase.user, phase.target);
             waitForUser();
         }
 
         cout << endl;
 
-        user->setActualKI(user->getActualKI() + user->getBonusKIPoints());
-
-        characters->at(phase.userIndex) = *user;
-        if (phase.targetIndex != -1) {
-            characters->at(phase.targetIndex) = *target;
-        }
+        phase.user->setActualKI(phase.user->getActualKI() + phase.user->getBonusKIPoints());
     }
     end();
 }
