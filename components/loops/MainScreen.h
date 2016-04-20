@@ -11,7 +11,7 @@
 #include "GameSequence.h"
 #include "../../include/Terminal.h"
 
-const string GAME_NAME = "Dragon Ball Z RPG Edition (Demo)";
+const string GAME_NAME = "Dragon Ball Z Ultimate Tenkaichi :: RPG Edition";
 
 class MainScreen : public GameSequence {
 public:
@@ -25,8 +25,6 @@ void MainScreen::begin() {
     cout << setw(GAME_NAME.length() + 5) << setfill('*') << " " << endl;
     cout << "* " << GAME_NAME << " *" << endl;
     cout << setw(GAME_NAME.length() + 5) << setfill('*') << " " << endl;
-
-    cout << "Press ENTER to start the demo" << endl;
 
     waitForUser();
 

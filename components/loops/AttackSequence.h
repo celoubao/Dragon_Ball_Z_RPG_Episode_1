@@ -13,6 +13,10 @@ struct Phase {
     Move *move;
     Character *target;
     Character *user;
+    bool targetKO = false;
+    bool userKO = false;
+    int targetIndex;
+    int userIndex;
 };
 
 class AttackSequence : public GameSequence {
@@ -52,7 +56,14 @@ void AttackSequence::begin() {
             waitForUser();
 
             if (phase.target->getActualHP() <= 0) {
-                cout << phase.target->getName() << " fainted!";
+                cout << phase.target->getName() << " is unable to fight!" << endl;
+                phase.targetKO = true;
+                waitForUser();
+            }
+
+            if (phase.user->getActualHP() <= 0) {
+                cout << phase.user->getName() << " is unable to fight!" << endl;
+                phase.userKO = true;
                 waitForUser();
             }
         }

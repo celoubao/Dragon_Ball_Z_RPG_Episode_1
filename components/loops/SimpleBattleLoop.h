@@ -1,7 +1,6 @@
 /**
  * SimpleBattleLoop
  * In this mode each player attacks one after the other.
- * SimpleBattleLoop.end() will be called when one of the player is dead (fainted)
  */
 
 #ifndef SIMPLE_BATTLE_LOOP_H
@@ -114,6 +113,8 @@ void SimpleBattleLoop::selectMove(Character &user) {
     phase->move = selectedMove;
     phase->user = &user;
     phase->target = &characters[targetIndex];
+    phase->targetIndex = targetIndex;
+    phase->userIndex = characterIndex;
 
     onNewPhase(*phase);
 

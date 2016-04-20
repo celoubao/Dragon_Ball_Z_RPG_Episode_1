@@ -18,7 +18,14 @@ int main() {
     MainScreen mainScreen;
     mainScreen.begin();
 
-    CharacterSelectionScreen selectionScreen(2);
+    int numPlayers;
+    do {
+        clearScreen();
+        cout << "How many players? [2-4]: ";
+        numPlayers = getInt();
+    } while (numPlayers < 2 || numPlayers > 4);
+
+    CharacterSelectionScreen selectionScreen(numPlayers);
     selectionScreen.begin();
 
     startBattleLoop(selectionScreen.getCharacters());
@@ -37,7 +44,6 @@ void startBattleLoop(vector<Character *> characters) {
     bool restart;
     do {
         battleLoop.restart();
-
         cout << "Rematch? (Y)es / (N)o: ";
         string input = utils::toLowercase(getString());
         restart = input == "y" || input == "yes";

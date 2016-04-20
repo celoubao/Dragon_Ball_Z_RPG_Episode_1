@@ -30,11 +30,10 @@ public:
     void restart();
 
 protected:
-    void onNewPhase(Phase& phase);
+    void onNewPhase(Phase &phase);
 
     virtual void checkCharacterStatus(Character *character);
 
-    long numCharacters;
     int characterIndex;
     vector <Character> characters;
 
@@ -57,7 +56,7 @@ void BattleLoop::end() {
 }
 
 void BattleLoop::goToNextCharacter() {
-    if (characterIndex == numCharacters - 1) {
+    if (characterIndex == characters.size() - 1) {
         characterIndex = 0;
         attackSequence = new AttackSequence(phases, characters);
 
@@ -79,7 +78,6 @@ void BattleLoop::checkCharacterStatus(Character *character) {
 }
 
 BattleLoop::BattleLoop(vector <Character> &characters) {
-    this->numCharacters = characters.size();
     this->characterIndex = -1;
     this->characters = characters;
 }
@@ -94,7 +92,7 @@ void BattleLoop::restart() {
     begin();
 }
 
-void BattleLoop::onNewPhase(Phase& phase) {
+void BattleLoop::onNewPhase(Phase &phase) {
     phases.push_back(phase);
 }
 
