@@ -13,8 +13,6 @@ struct Phase {
     Move *move;
     Character *target;
     Character *user;
-    bool targetKO = false;
-    bool userKO = false;
     int targetIndex;
     int userIndex;
 };
@@ -27,12 +25,22 @@ public:
 
     virtual void end();
 
+    vector<Character> *getGraveyard();
+
 private:
+    vector<Character> *graveyard;
     vector<Phase> *phases;
+    vector<Character> *characters;
 };
 
 AttackSequence::AttackSequence(vector<Phase> &phases, vector<Character> &characters) {
+    this->graveyard = new vector<Character>();
     this->phases = &phases;
+    this->characters = &characters;
+}
+
+vector<Character> *AttackSequence::getGraveyard() {
+    return graveyard;
 }
 
 void AttackSequence::begin() {
@@ -41,6 +49,11 @@ void AttackSequence::begin() {
     cout << endl;
 
     for (Phase phase: *phases) {
+
+        // We skip the phase if the user is dead
+        if (phase.userIndex >= characters->size() || phase.user != &characters->at(phase.userIndex)) {
+            continue;
+        }
 
         Move *move = phase.move;
 
@@ -57,14 +70,18 @@ void AttackSequence::begin() {
 
             if (phase.target->getActualHP() <= 0) {
                 cout << phase.target->getName() << " is unable to fight!" << endl;
-                phase.targetKO = true;
+                characters->erase(characters->begin() + phase.targetIndex);
+                graveyard->push_back(*phase.target);
                 waitForUser();
+                cout << endl;
             }
 
             if (phase.user->getActualHP() <= 0) {
                 cout << phase.user->getName() << " is unable to fight!" << endl;
-                phase.userKO = true;
+                graveyard->push_back(*phase.user);
+                characters->erase(characters->begin() + phase.userIndex);
                 waitForUser();
+                cout << endl;
             }
         }
         else {

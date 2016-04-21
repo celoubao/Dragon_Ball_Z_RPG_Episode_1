@@ -40,6 +40,8 @@ protected:
 private:
     AttackSequence *attackSequence = nullptr;
     vector <Phase> phases;
+
+    void onWinner(Character &character);
 };
 
 void BattleLoop::begin() {
@@ -63,6 +65,14 @@ void BattleLoop::goToNextCharacter() {
         attackSequence->begin();
 
         phases.clear();
+
+
+        if (characters.size() == 1) {
+            onWinner(characters[0]);
+            end();
+            return;
+        }
+
     }
     else {
         characterIndex += 1;
@@ -94,6 +104,14 @@ void BattleLoop::restart() {
 
 void BattleLoop::onNewPhase(Phase &phase) {
     phases.push_back(phase);
+}
+
+void BattleLoop::onWinner(Character &character) {
+    cout << character.getName() << " won!" << endl;
+    for (Character dead: *attackSequence->getGraveyard()) {
+        characters.push_back(dead);
+    }
+    waitForUser();
 }
 
 
