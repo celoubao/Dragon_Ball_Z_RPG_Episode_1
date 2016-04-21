@@ -74,7 +74,7 @@ void AttackSequence::begin() {
 
         cout << endl;
 
-        phase.user->setActualKI(phase.user->getActualKI() + phase.user->getBonusKIPoints());
+        phase.user->increaseKI();
     }
     end();
 }

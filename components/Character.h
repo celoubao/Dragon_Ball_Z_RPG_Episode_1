@@ -47,7 +47,7 @@ public:
 
     long getActualKI();
 
-    void setActualKI(long ki);
+    void setActualKI(long ki, bool printMessage);
 
     long getMaxKI();
 
@@ -66,6 +66,8 @@ public:
     void setActualHP(double hp);
 
     void resetCharacterStats();
+
+    void increaseKI();
 
 private:
     string name;
@@ -136,16 +138,20 @@ long Character::getActualKI() {
     return actualKI;
 }
 
-void Character::setActualKI(long ki) {
+void Character::setActualKI(long ki, bool printMessage) {
     if (actualKI < maxKI || ki < maxKI) {
         this->actualKI = ki;
         if (actualKI >= maxKI) {
             actualKI = maxKI;
-            cout << getName() << " is in Power Max Mode!" << endl;
+            if (printMessage) {
+                cout << getName() << " is in Power Max Mode!" << endl;
+            }
         }
     }
     else {
-        cout << getName() << "'s KI cannot go higher!";
+        if (printMessage) {
+            cout << getName() << "'s KI cannot go higher!" << endl;
+        }
     }
 }
 
@@ -163,6 +169,10 @@ long Character::getBonusKIPoints() {
 
 void Character::setBonusKIPoints(long bonusKIPoints) {
     this->bonusKiPoints = bonusKIPoints;
+}
+
+void Character::increaseKI() {
+    setActualKI(getActualKI() + getBonusKIPoints(), false);
 }
 
 

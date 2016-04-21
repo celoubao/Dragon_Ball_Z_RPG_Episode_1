@@ -23,7 +23,7 @@ public:
 void KiCharge::use(Character *user, Character *target) {
     //Move::use(user, target);
     cout << user->getName() << " is Charging KI!" << endl;
-    user->setActualKI(user->getActualKI()+(KI_BAR / 2));
+    user->setActualKI(user->getActualKI() + (KI_BAR / 2), true);
 }
 
 bool KiCharge::needsTarget() {

@@ -14,7 +14,6 @@
 #include "BattleLoop.h"
 #include "../../characters/saiyans/Goku.h"
 #include "../../characters/saiyans/Vegeta.h"
-#include "../moves/RandomMove.h"
 #include "../GameData.h"
 
 using namespace std;

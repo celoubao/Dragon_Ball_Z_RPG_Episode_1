@@ -34,7 +34,7 @@ void Move::use(Character *user, Character *target) {
     cout << user->getName() << " used " << name << "!" << endl;
     if (kiUsage > 0) {
         double remainingKI = user->getActualKI() - (kiUsage);
-        user->setActualKI((long) remainingKI);
+        user->setActualKI((long) remainingKI, true);
     }
 }
 
