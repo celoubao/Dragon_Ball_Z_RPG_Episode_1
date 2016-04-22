@@ -18,10 +18,11 @@
 #include "../characters/saiyans/Vegeta.h"
 #include "../characters/saiyans/Goku.h"
 #include "moves/KiCharge.h"
+#include "moves/Block.h"
 
 using namespace std;
 
-int NUM_MOVES_PER_CHARACTER = 3;
+int NUM_MOVES_PER_CHARACTER = 4;
 
 namespace game {
     vector<Character *> characters;
@@ -30,9 +31,10 @@ namespace game {
     map<string, vector<int>> moveSets;
 
     void initializeMoveList() {
-        // All characters have those attacks
+        // All characters have those moves
         moves.push_back(new KiCharge());
         moves.push_back((new KiBlast()));
+        moves.push_back((new Block()));
 
         // Goku
         moves.push_back((new Kamehameha()));
@@ -59,6 +61,8 @@ namespace game {
             vector<int> list;
             list.push_back(0);
             list.push_back(1);
+            list.push_back(2);
+
             for (int j = list.size(); j < NUM_MOVES_PER_CHARACTER; j++) {
                 moveIndex = i + j; // j == 0 ? 0 : i+j
                 list.push_back(moveIndex);

@@ -33,7 +33,7 @@ public:
 
     virtual void onNext(int index);
 
-    void getUserInput(Character& Character);
+    void getUserInput(Character &Character);
 
     void displayCharacterState(Character &character);
 
@@ -61,7 +61,7 @@ void SimpleBattleLoop::onNext(int index) {
     getUserInput(characters[index]);
 }
 
-void SimpleBattleLoop::getUserInput(Character& character) {
+void SimpleBattleLoop::getUserInput(Character &character) {
     selectMove(character);
 }
 
@@ -97,25 +97,31 @@ void SimpleBattleLoop::selectMove(Character &user) {
 
     int targetIndex = -1;
 
-    if (selectedMove->needsTarget()) {
-        do {
-            targetIndex = selectTarget(user);
-            if (targetIndex == characterIndex) {
-                cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
-                targetIndex = -1;
-                waitForUser();
-            }
-        } while (targetIndex == -1);
+    // Moves that affects the user's state are prioritized
+    if (selectedMove->affectsUserState()) {
+        selectedMove->use(&user, nullptr);
+        user.increaseKI();
     }
+    else {
+        if (selectedMove->needsTarget()) {
+            do {
+                targetIndex = selectTarget(user);
+                if (targetIndex == characterIndex) {
+                    cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
+                    targetIndex = -1;
+                    waitForUser();
+                }
+            } while (targetIndex == -1);
+        }
+        Phase *phase = new Phase();
+        phase->move = selectedMove;
+        phase->user = &user;
+        phase->target = &characters[targetIndex];
+        phase->targetIndex = targetIndex;
+        phase->userIndex = characterIndex;
 
-    Phase* phase = new Phase();
-    phase->move = selectedMove;
-    phase->user = &user;
-    phase->target = &characters[targetIndex];
-    phase->targetIndex = targetIndex;
-    phase->userIndex = characterIndex;
-
-    onNewPhase(*phase);
+        onNewPhase(*phase);
+    }
 
     goToNextCharacter();
 }

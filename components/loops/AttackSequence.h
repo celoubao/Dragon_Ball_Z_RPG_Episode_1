@@ -59,12 +59,8 @@ void AttackSequence::begin() {
 
         if (phase.move->needsTarget()) {
             cout << phase.user->getName() << " is attacking " << phase.target->getName() << "!" << endl;
-            if (move->getKiUsage() > phase.user->getActualKI()) {
-                cout << phase.user->getName() << " tried to use " << move->getName() << " but it failed!" << endl;
-            }
-            else {
-                move->use(phase.user, phase.target);
-            }
+
+            move->use(phase.user, phase.target);
 
             waitForUser();
 
@@ -83,6 +79,8 @@ void AttackSequence::begin() {
                 waitForUser();
                 cout << endl;
             }
+
+            phase.target->resetState();
         }
         else {
             move->use(phase.user, phase.target);
@@ -92,6 +90,8 @@ void AttackSequence::begin() {
         cout << endl;
 
         phase.user->increaseKI();
+
+        phase.user->resetState();
     }
     end();
 }

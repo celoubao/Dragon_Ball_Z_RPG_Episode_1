@@ -9,6 +9,9 @@ using namespace std;
 static const int LIFE_BAR = 1000;
 static const int KI_BAR = 500;
 
+static const int STATE_IDLE = 0;
+static const int STATE_BLOCKING = 1;
+
 /**
  * Character Specifications:
  *
@@ -69,6 +72,12 @@ public:
 
     void increaseKI();
 
+    int getState();
+
+    void setState(int newState);
+
+    void resetState();
+
 private:
     string name;
     long maxHP;
@@ -80,6 +89,8 @@ private:
 
     float defense;
     float attack;
+
+    int state = STATE_IDLE;
 };
 
 Character::Character() {
@@ -173,6 +184,18 @@ void Character::setBonusKIPoints(long bonusKIPoints) {
 
 void Character::increaseKI() {
     setActualKI(getActualKI() + getBonusKIPoints(), false);
+}
+
+int Character::getState() {
+    return state;
+}
+
+void Character::setState(int newState) {
+    state = newState;
+}
+
+void Character::resetState() {
+    state = STATE_IDLE;
 }
 
 

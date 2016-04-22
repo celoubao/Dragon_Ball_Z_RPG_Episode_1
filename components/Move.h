@@ -17,6 +17,8 @@ public:
 
     virtual bool needsTarget();
 
+    virtual bool affectsUserState();
+
     virtual long getKiUsage();
 
     string getName();
@@ -24,6 +26,12 @@ public:
 protected:
     long kiUsage;
     string name;
+
+    void onAffectUsersKI(Character *user);
+
+    void onAffectTargetsHP(Character *pCharacter, Character *target);
+
+    virtual void onMoveFailed(Character *user);
 };
 
 string Move::getName() {
@@ -31,8 +39,23 @@ string Move::getName() {
 }
 
 void Move::use(Character *user, Character *target) {
-    cout << user->getName() << " used " << name << "!" << endl;
-    if (kiUsage > 0) {
+    if (getKiUsage() > user->getActualKI()) {
+        onMoveFailed(user);
+        return;
+    }
+    if (needsTarget()) {
+        switch (target->getState()) {
+            case STATE_BLOCKING:
+                cout << target->getName() << " is protecting itself!" << endl;
+                break;
+            default:
+                cout << user->getName() << " used " << name << "!" << endl;
+                onAffectUsersKI(user);
+                onAffectTargetsHP(user, target);
+                break;
+        }
+    }
+    else {
         double remainingKI = user->getActualKI() - (kiUsage);
         user->setActualKI((long) remainingKI, true);
     }
@@ -46,20 +69,44 @@ bool Move::needsTarget() {
     return true;
 }
 
+bool Move::affectsUserState() {
+    return false;
+}
+
+void Move::onAffectUsersKI(Character *user) {
+    if (kiUsage > 0) {
+        double remainingKI = user->getActualKI() - (kiUsage);
+        user->setActualKI((long) remainingKI, true);
+    }
+}
+
+void Move::onAffectTargetsHP(Character *pCharacter, Character *target) {
+
+}
+
+void Move::onMoveFailed(Character *user) {
+    cout << user->getName() << " tried to use " << getName() << " but it failed!" << endl;
+}
+
+
 /**
  * A Damage Move is a move that affects the target's HP
  */
 class DamageMove : public Move {
 public:
-    virtual void use(Character *user, Character *target);
+    virtual void onAffectTargetsHP(Character *user, Character *target);
 
 protected:
     virtual float getDamagePoints();
 };
 
-void DamageMove::use(Character *user, Character *target) {
-    Move::use(user, target);
 
+float DamageMove::getDamagePoints() {
+    return 0;
+}
+
+void DamageMove::onAffectTargetsHP(Character *user, Character *target) {
+    Move::onAffectTargetsHP(user, target);
     // We calculate the max damage the target is going to take;
     float initialDamagePoints = getDamagePoints();
     float damageBonus = initialDamagePoints * user->getAttack();
@@ -76,8 +123,5 @@ void DamageMove::use(Character *user, Character *target) {
     target->setActualHP(target->getActualHP() - damagePoints);
 }
 
-float DamageMove::getDamagePoints() {
-    return 0;
-}
 
 #endif //MOVE_H
