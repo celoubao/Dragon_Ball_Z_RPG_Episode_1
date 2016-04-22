@@ -11,8 +11,8 @@ class Broly : public Saiyan {
 public:
     Broly() {
         setName("Broly");
-        setAttack(0.8);
-        setDefense(0.3);
+        setAttack(0.6);
+        setDefense(0.1);
         setBonusKIPoints(1);
         setMaxKI(KI_BAR * 2);
         setMaxHP(LIFE_BAR * 5);

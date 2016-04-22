@@ -14,7 +14,7 @@ public:
 
     Goku() {
         setName("Goku");
-        setAttack(0.6);
+        setAttack(0.5);
         setDefense(0.04);
         setBonusKIPoints(20);
         resetCharacterStats();
