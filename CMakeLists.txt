@@ -4,12 +4,12 @@ project(Dragon_Ball_Z_RPG_Edition)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-        characters/saiyans/Broly.h
+        characters/saiyans/Frieza.h
         characters/saiyans/Goku.h
         characters/saiyans/Vegeta.h
         characters/Saiyan.h
         components/moves/ErasorCannon.h
-        components/moves/Kamehameha.h
+        components/moves/SuperKamehameha.h
         components/moves/GalicGun.h
         components/Character.h
         components/Move.h

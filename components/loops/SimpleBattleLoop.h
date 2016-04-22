@@ -66,21 +66,22 @@ void SimpleBattleLoop::getUserInput(Character &character) {
 }
 
 void SimpleBattleLoop::displayCharacterState(Character &character) {
-    cout << setw(20) << setfill('*') << " " << endl;
+    drawDivider();
     for (int i = 0; i < characters.size(); ++i) {
         cout << characters[i].getName();
         if (i != characters.size() - 1) {
             cout << " VS ";
         }
     }
-    cout << endl << setw(20) << setfill('*') << " " << endl;
+    cout << endl;
+    drawDivider();
     cout << "Player " << characterIndex + 1 << endl;
-    cout << setw(20) << setfill('*') << " " << endl;
+    drawDivider();
     cout << character.getName() << endl;
-    cout << setw(20) << setfill('*') << " " << endl;
+    drawDivider();
     cout << "HP: " << character.getActualHP() << "/" << character.getMaxHP() << endl;
     cout << "KI: " << character.getActualKI() << "/" << character.getMaxKI() << endl;
-    cout << setw(20) << setfill('*') << " " << endl;
+    drawDivider();
 
 }
 
@@ -144,7 +145,7 @@ int SimpleBattleLoop::selectTarget(Character &character) {
 
         cout << characters[i].getName() << endl;
     }
-    cout << setw(20) << setfill('*') << " " << endl;
+    drawDivider();
     cout << "Enter value: ";
     string input = getString();
     try {

@@ -94,7 +94,7 @@ private:
 };
 
 Character::Character() {
-    setMaxHP(LIFE_BAR * 3);
+    setMaxHP(LIFE_BAR * 2);
     setMaxKI(KI_BAR * 3);
     resetCharacterStats();
 }

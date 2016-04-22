@@ -10,11 +10,11 @@
 #include <iomanip>
 
 #include "Move.h"
-#include "moves/Kamehameha.h"
+#include "moves/SuperKamehameha.h"
 #include "moves/ErasorCannon.h"
 #include "moves/GalicGun.h"
 #include "moves/KiBlast.h"
-#include "../characters/saiyans/Broly.h"
+#include "../characters/saiyans/Frieza.h"
 #include "../characters/saiyans/Vegeta.h"
 #include "../characters/saiyans/Goku.h"
 #include "moves/KiCharge.h"
@@ -39,12 +39,12 @@ namespace game {
         moves.push_back((new Block()));
 
         // Goku
-        moves.push_back((new Kamehameha()));
+        moves.push_back((new SuperKamehameha()));
 
         // Vegeta
         moves.push_back((new GalicGun()));
 
-        // Broly
+        // Frieza
         moves.push_back((new EraserCannon()));
     }
 
@@ -52,7 +52,7 @@ namespace game {
 
         characters.push_back((new Goku()));
         characters.push_back((new Vegeta()));
-        characters.push_back((new Broly()));
+        characters.push_back((new Frieza()));
 
         int moveIndex = 0;
 
@@ -78,7 +78,7 @@ namespace game {
         vector<int> moveSet = moveSets[character.getName()];
 
         cout << "Moves:" << endl;
-        cout << setw(20) << setfill('*') << " " << endl;
+        drawDivider();
 
         Move *movePtr;
         for (int i = 0; i < moveSet.size(); i++) {
@@ -93,7 +93,7 @@ namespace game {
             }
         }
 
-        cout << setw(20) << setfill('*') << " " << endl;
+        drawDivider();
 
         cout << "Select a move: ";
         moveIndex = getInt();

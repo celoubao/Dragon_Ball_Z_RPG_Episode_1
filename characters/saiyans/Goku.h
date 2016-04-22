@@ -6,17 +6,16 @@
 #define GOKU_H
 
 #include "../Saiyan.h"
-#include "../../components/moves/Kamehameha.h"
+#include "../../components/moves/SuperKamehameha.h"
 #include "../../components/moves/ErasorCannon.h"
 
 class Goku : public Saiyan {
 public:
-
     Goku() {
-        setName("Goku");
-        setAttack(0.5);
-        setDefense(0.04);
-        setBonusKIPoints(20);
+        setName("SSJ Goku");
+        setAttack(0.8);
+        setDefense(0.06);
+        setBonusKIPoints(25);
         resetCharacterStats();
     }
 };

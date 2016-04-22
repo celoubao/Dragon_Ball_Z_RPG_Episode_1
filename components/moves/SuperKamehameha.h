@@ -8,10 +8,10 @@
 #include "../Character.h"
 #include "../Move.h"
 
-class Kamehameha : public DamageMove {
+class SuperKamehameha : public DamageMove {
 public:
-    Kamehameha() {
-        name = "Kamehameha";
+    SuperKamehameha() {
+        name = "Super Kamehameha";
         kiUsage = (long) KI_BAR;
     }
 
@@ -21,11 +21,11 @@ protected:
     virtual float getDamagePoints();
 };
 
-void Kamehameha::use(Character *user, Character *target) {
+void SuperKamehameha::use(Character *user, Character *target) {
     DamageMove::use(user, target);
 }
 
-float Kamehameha::getDamagePoints() {
+float SuperKamehameha::getDamagePoints() {
     return LIFE_BAR / 3;
 }
 

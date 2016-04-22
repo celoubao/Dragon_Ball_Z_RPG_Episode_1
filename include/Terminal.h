@@ -11,6 +11,8 @@ using namespace std;
 
 void clearScreen();
 
+void drawDivider();
+
 void waitForUser();
 
 int getInt();
@@ -48,6 +50,10 @@ int getInt() {
     catch (std::invalid_argument e) {
         return -1;
     }
+}
+
+void drawDivider() {
+    cout << setw(50) << setfill('*') << " " << endl;
 }
 
 #endif //TERMINAL_H

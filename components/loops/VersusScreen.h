@@ -49,14 +49,15 @@ VersusScreen::VersusScreen(vector<Character> &characters) {
 }
 
 void VersusScreen::displayCharacters() {
-    cout << setw(20) << setfill('*') << " " << endl;
+    drawDivider();
     for (int i = 0; i < characters.size(); ++i) {
         cout << characters[i].getName();
         if (i != characters.size() - 1) {
             cout << " VS ";
         }
     }
-    cout << endl << setw(20) << setfill('*') << " " << endl;
+    cout << endl;
+    drawDivider();
 }
 
 
