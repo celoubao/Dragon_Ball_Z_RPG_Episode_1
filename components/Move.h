@@ -29,7 +29,7 @@ protected:
 
     void onAffectUsersKI(Character *user);
 
-    virtual void onAffectTargetsHP(Character *pCharacter, Character *target);
+    virtual void onAffectTargetsHP(Character *pCharacter, Character *target, double d);
 
     virtual void onMoveFailed(Character *user);
 };
@@ -44,15 +44,17 @@ void Move::use(Character *user, Character *target) {
         return;
     }
     if (needsTarget()) {
+        double reductionPercentage = 0;
         switch (target->getState()) {
             case STATE_BLOCKING:
+                reductionPercentage = 0.5f;
                 cout << target->getName() << " is protecting itself!" << endl;
                 break;
             default:
                 cout << user->getName() << " used " << name << "!" << endl;
-                onAffectTargetsHP(user, target);
                 break;
         }
+        onAffectTargetsHP(user, target, reductionPercentage);
         onAffectUsersKI(user);
     }
     else {
@@ -80,7 +82,7 @@ void Move::onAffectUsersKI(Character *user) {
     }
 }
 
-void Move::onAffectTargetsHP(Character *pCharacter, Character *target) {
+void Move::onAffectTargetsHP(Character *pCharacter, Character *target, double d) {
 
 }
 
@@ -94,7 +96,7 @@ void Move::onMoveFailed(Character *user) {
  */
 class DamageMove : public Move {
 public:
-    virtual void onAffectTargetsHP(Character *user, Character *target);
+    virtual void onAffectTargetsHP(Character *user, Character *target, double reductionPercentage);
 
 protected:
     virtual float getDamagePoints();
@@ -105,8 +107,8 @@ float DamageMove::getDamagePoints() {
     return 0;
 }
 
-void DamageMove::onAffectTargetsHP(Character *user, Character *target) {
-    Move::onAffectTargetsHP(user, target);
+void DamageMove::onAffectTargetsHP(Character *user, Character *target, double reductionPercentage) {
+    Move::onAffectTargetsHP(user, target, 0);
     // We calculate the max damage the target is going to take;
     float initialDamagePoints = getDamagePoints();
     float damageBonus = initialDamagePoints * user->getAttack();
@@ -118,6 +120,10 @@ void DamageMove::onAffectTargetsHP(Character *user, Character *target) {
 
     // Finally we subtract the reduction points from the damage points
     double damagePoints = calculatedDamagePoints - damageReduction;
+
+    if(reductionPercentage > 0) {
+        damagePoints -= (damagePoints * reductionPercentage);
+    }
 
     // We reduce the target's Health Points
     target->setActualHP(target->getActualHP() - damagePoints);
