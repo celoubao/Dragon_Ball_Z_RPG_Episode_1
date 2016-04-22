@@ -29,7 +29,7 @@ protected:
 
     void onAffectUsersKI(Character *user);
 
-    void onAffectTargetsHP(Character *pCharacter, Character *target);
+    virtual void onAffectTargetsHP(Character *pCharacter, Character *target);
 
     virtual void onMoveFailed(Character *user);
 };
@@ -50,10 +50,10 @@ void Move::use(Character *user, Character *target) {
                 break;
             default:
                 cout << user->getName() << " used " << name << "!" << endl;
-                onAffectUsersKI(user);
                 onAffectTargetsHP(user, target);
                 break;
         }
+        onAffectUsersKI(user);
     }
     else {
         double remainingKI = user->getActualKI() - (kiUsage);

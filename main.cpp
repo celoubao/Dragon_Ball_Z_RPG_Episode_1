@@ -5,13 +5,13 @@
 #include "include/String.h"
 #include "components/loops/MainScreen.h"
 #include "components/loops/CharacterSelectionScreen.h"
+#include "components/modes/FreeForAll.h"
+#include "components/modes/ModeSelectionScreen.h"
 
-
-using namespace std;
-
-void startBattleLoop(vector<Character *> characters);
 
 void startGameLoop();
+
+using namespace std;
 
 int main() {
     game::initializeGameData();
@@ -22,39 +22,12 @@ int main() {
 }
 
 void startGameLoop() {
-    MainScreen mainScreen;
-    mainScreen.begin();
+    vector<FightMode *> fightModes;
+    fightModes.push_back(new FreeForAll());
 
-    int numPlayers;
+    ModeSelectionScreen modeSelectionScreen(fightModes);
     do {
-        clearScreen();
-        cout << "Duel Mode" << endl;
-        cout << "How many players? [2-4]: ";
-        numPlayers = getInt();
-    } while (numPlayers < 2 || numPlayers > 4);
-
-    CharacterSelectionScreen selectionScreen(numPlayers);
-    selectionScreen.begin();
-
-    startBattleLoop(selectionScreen.getCharacters());
-}
-
-void startBattleLoop(vector<Character *> characters) {
-
-    vector<Character> chars;
-    for (int i = 0; i < characters.size(); i++) {
-        chars.push_back(*characters[(i)]);
-    }
-
-    SimpleBattleLoop battleLoop(chars);
-    bool restart;
-    do {
-        battleLoop.restart();
-        cout << "Rematch? (Y)es / (N)o: ";
-        string input = utils::toLowercase(getString());
-        restart = input == "y" || input == "yes";
-    } while (restart);
-
-    startGameLoop();
+        modeSelectionScreen.begin();
+    } while (modeSelectionScreen.getSelectedMode()->isDone());
 
 }

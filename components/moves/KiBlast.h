@@ -12,7 +12,7 @@ class KiBlast:  public DamageMove {
 public:
     KiBlast() {
         name = "Ki Blast";
-        kiUsage = (long) KI_BAR / 5;
+        kiUsage = (long) KI_BAR / 3;
     }
 
     virtual void use(Character *user, Character *target);

@@ -74,8 +74,9 @@ void SimpleBattleLoop::displayCharacterState(Character &character) {
         }
     }
     cout << endl << setw(20) << setfill('*') << " " << endl;
-
-    cout << "What should " << character.getName() << " do ?" << endl;
+    cout << "Player " << characterIndex + 1 << endl;
+    cout << setw(20) << setfill('*') << " " << endl;
+    cout << character.getName() << endl;
     cout << setw(20) << setfill('*') << " " << endl;
     cout << "HP: " << character.getActualHP() << "/" << character.getMaxHP() << endl;
     cout << "KI: " << character.getActualKI() << "/" << character.getMaxKI() << endl;

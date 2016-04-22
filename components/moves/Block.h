@@ -12,7 +12,7 @@ class Block : public Move {
 public:
     Block() {
         name = "Block";
-        kiUsage = KI_BAR / 3;
+        kiUsage = KI_BAR / 4;
     }
 
     virtual void use(Character *user, Character *target);

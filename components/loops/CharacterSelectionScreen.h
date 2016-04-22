@@ -32,7 +32,7 @@ void CharacterSelectionScreen::begin() {
     GameSequence::begin();
     for(int i = 0; i < numCharacters; i++) {
         clearScreen();
-        cout << "Player " << i+1 << " select your Character!" << endl;
+        cout << "Player " << i+1 << " select your Character!" << endl << endl;
         characters.push_back(game::selectCharacter());
     }
     end();

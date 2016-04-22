@@ -19,6 +19,7 @@
 #include "../characters/saiyans/Goku.h"
 #include "moves/KiCharge.h"
 #include "moves/Block.h"
+#include "modes/FightMode.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ namespace game {
     vector<Move *> moves;
 
     map<string, vector<int>> moveSets;
+
 
     void initializeMoveList() {
         // All characters have those moves
@@ -110,6 +112,7 @@ namespace game {
         for (int i = 0; i < characters.size(); i++) {
             cout << i << " | " << characters[i]->getName() << endl;
         }
+        cout << endl;
         do {
             cout << "Enter value: ";
             index = getInt();

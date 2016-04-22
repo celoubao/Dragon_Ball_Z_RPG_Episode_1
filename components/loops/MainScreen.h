@@ -11,7 +11,7 @@
 #include "GameSequence.h"
 #include "../../include/Terminal.h"
 
-const string GAME_NAME = "Dragon Ball Z :: RPG EDITION";
+const string GAME_NAME = "Dragon Ball Z :: RPG EDITION Episode 1";
 
 class MainScreen : public GameSequence {
 public:
