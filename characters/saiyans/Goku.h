@@ -7,7 +7,7 @@
 
 #include "../Saiyan.h"
 #include "../../components/moves/SuperKamehameha.h"
-#include "../../components/moves/ErasorCannon.h"
+#include "../../components/moves/DeathBeam.h"
 
 class Goku : public Saiyan {
 public:

@@ -12,7 +12,7 @@ class GalicGun : public DamageMove {
 public:
     GalicGun() {
         name = "Galic Gun";
-        kiUsage = (long) KI_BAR;
+        kiUsage = (long) KI_BAR / 2;
     }
 
     virtual void use(Character *user, Character *target);
@@ -26,7 +26,7 @@ void GalicGun::use(Character *user, Character *target) {
 }
 
 float GalicGun::getDamagePoints() {
-    return LIFE_BAR / 3;
+    return LIFE_BAR;
 }
 
 #endif //GalicGun_H

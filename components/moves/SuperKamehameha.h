@@ -26,7 +26,7 @@ void SuperKamehameha::use(Character *user, Character *target) {
 }
 
 float SuperKamehameha::getDamagePoints() {
-    return LIFE_BAR / 3;
+    return LIFE_BAR;
 }
 
 #endif //KAMEHAMEHA_H

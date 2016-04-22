@@ -11,7 +11,7 @@
 
 #include "Move.h"
 #include "moves/SuperKamehameha.h"
-#include "moves/ErasorCannon.h"
+#include "moves/DeathBeam.h"
 #include "moves/GalicGun.h"
 #include "moves/KiBlast.h"
 #include "../characters/saiyans/Frieza.h"
@@ -45,7 +45,7 @@ namespace game {
         moves.push_back((new GalicGun()));
 
         // Frieza
-        moves.push_back((new EraserCannon()));
+        moves.push_back((new DeathBeam()));
     }
 
     void initializeCharacterList() {

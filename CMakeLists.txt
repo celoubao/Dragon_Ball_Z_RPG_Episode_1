@@ -8,7 +8,7 @@ set(SOURCE_FILES
         characters/saiyans/Goku.h
         characters/saiyans/Vegeta.h
         characters/Saiyan.h
-        components/moves/ErasorCannon.h
+        components/moves/DeathBeam.h
         components/moves/SuperKamehameha.h
         components/moves/GalicGun.h
         components/Character.h
