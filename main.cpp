@@ -4,7 +4,6 @@
 #include "components/loops/SimpleBattleLoop.h"
 #include "include/String.h"
 #include "components/loops/MainScreen.h"
-#include "components/GameData.h"
 #include "components/loops/CharacterSelectionScreen.h"
 
 
@@ -12,15 +11,24 @@ using namespace std;
 
 void startBattleLoop(vector<Character *> characters);
 
+void startGameLoop();
+
 int main() {
     game::initializeGameData();
 
+    startGameLoop();
+
+    return 0;
+}
+
+void startGameLoop() {
     MainScreen mainScreen;
     mainScreen.begin();
 
     int numPlayers;
     do {
         clearScreen();
+        cout << "Duel Mode" << endl;
         cout << "How many players? [2-4]: ";
         numPlayers = getInt();
     } while (numPlayers < 2 || numPlayers > 4);
@@ -29,8 +37,6 @@ int main() {
     selectionScreen.begin();
 
     startBattleLoop(selectionScreen.getCharacters());
-
-    return 0;
 }
 
 void startBattleLoop(vector<Character *> characters) {
@@ -48,5 +54,7 @@ void startBattleLoop(vector<Character *> characters) {
         string input = utils::toLowercase(getString());
         restart = input == "y" || input == "yes";
     } while (restart);
+
+    startGameLoop();
 
 }
