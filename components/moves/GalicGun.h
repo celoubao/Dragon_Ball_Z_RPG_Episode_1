@@ -12,6 +12,7 @@ class GalicGun : public DamageMove {
 public:
     GalicGun() {
         name = "Galic Gun";
+
         kiUsage = (long) KI_BAR / 2;
     }
 
