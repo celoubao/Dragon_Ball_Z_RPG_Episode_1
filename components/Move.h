@@ -1,5 +1,5 @@
 //
-// Created by cloubao on 4/7/16.
+// Created by Charles-Eugene Loubao on 4/7/16.
 //
 
 #ifndef MOVE_H
@@ -58,8 +58,7 @@ void Move::use(Character *user, Character *target) {
         onAffectUsersKI(user);
     }
     else {
-        double remainingKI = user->getActualKI() - (kiUsage);
-        user->setActualKI((long) remainingKI, true);
+        onAffectUsersKI(user);
     }
 }
 

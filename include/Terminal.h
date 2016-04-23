@@ -1,5 +1,5 @@
 //
-// Created by cloubao on 4/8/16.
+// Created by Charles-Eugene Loubao on 4/8/16.
 //
 
 #ifndef TERMINAL_H
