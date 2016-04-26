@@ -39,7 +39,7 @@ struct CharacterStats {
     float attack = 0;
     float defense = 0;
     double actualHP = 0;
-    long maxHP = LIFE_BAR * 2 + (LIFE_BAR / 2);
+    long maxHP = LIFE_BAR * 3;
     long actualKI = KI_BAR;
     long maxKI = KI_BAR * 3;
     long bonusKI = 0;
