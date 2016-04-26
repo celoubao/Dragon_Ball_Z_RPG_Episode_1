@@ -41,17 +41,17 @@ namespace game {
         moves.push_back((new KiBlast()));
         moves.push_back((new Block()));
 
-        // Goku
+        // Moves specific to Goku
         moves.push_back((new Kamehameha()));
 //        moves.push_back(new Kaioken());
 
-        // SSJ Goku
+        // Moves specific to SSJ Goku
         moves.push_back(new SuperKamehameha());
 
-        // Vegeta
+        // Moves specific to Vegeta
         moves.push_back((new GalicGun()));
 
-        // Frieza
+        // Moves specific to Frieza
         moves.push_back((new DeathBeam()));
     }
 
