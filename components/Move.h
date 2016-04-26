@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Character.h"
 #include "../include/Terminal.h"
+#include "moves/MovePriorities.h"
 
 using namespace std;
 
@@ -17,9 +18,9 @@ public:
 
     virtual bool needsTarget();
 
-    virtual bool affectsUserState();
-
     virtual long getKiUsage();
+
+    virtual int getPriority();
 
     string getName();
 
@@ -48,7 +49,8 @@ void Move::use(Character *user, Character *target) {
         switch (target->getState()) {
             case STATE_BLOCKING:
                 reductionPercentage = 0.5f;
-                cout << target->getName() << " is blocking this attack!" << endl;
+                cout << target->getName() << " blocked the attack!" << endl;
+                cout << target->getName() << " took some damage!" << endl << endl;
                 break;
             default:
                 cout << user->getName() << " used " << name << "!" << endl;
@@ -70,10 +72,6 @@ bool Move::needsTarget() {
     return true;
 }
 
-bool Move::affectsUserState() {
-    return false;
-}
-
 void Move::onAffectUsersKI(Character *user) {
     if (kiUsage > 0) {
         double remainingKI = user->getActualKI() - (kiUsage);
@@ -87,6 +85,10 @@ void Move::onAffectTargetsHP(Character *pCharacter, Character *target, double d)
 
 void Move::onMoveFailed(Character *user) {
     cout << user->getName() << " tried to use " << getName() << " but it failed!" << endl;
+}
+
+int Move::getPriority() {
+    return PRIORITY_TYPE_NORMAL;
 }
 
 
@@ -120,7 +122,7 @@ void DamageMove::onAffectTargetsHP(Character *user, Character *target, double re
     // Finally we subtract the reduction points from the damage points
     double damagePoints = calculatedDamagePoints - damageReduction;
 
-    if(reductionPercentage > 0) {
+    if (reductionPercentage > 0) {
         damagePoints -= (damagePoints * reductionPercentage);
     }
 

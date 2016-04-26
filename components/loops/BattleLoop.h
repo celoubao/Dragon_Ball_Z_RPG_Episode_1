@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "GameSequence.h"
 #include "../Character.h"
 #include "../../characters/saiyans/Vegeta.h"
@@ -61,6 +62,9 @@ void BattleLoop::end() {
 void BattleLoop::goToNextCharacter() {
     if (characterIndex == characters.size() - 1) {
         characterIndex = 0;
+
+        sort(phases.begin(), phases.end());
+
         attackSequence = new AttackSequence(phases, characters);
 
         attackSequence->begin();

@@ -19,8 +19,6 @@ public:
 
     virtual bool needsTarget();
 
-    virtual bool affectsUserState();
-
     virtual void use(Character *user, Character *target);
 };
 
@@ -36,10 +34,6 @@ void Kaioken::use(Character *user, Character *target) {
     cout << user->getName() << "'s attack and defense have been boosted !" << endl;
 
     waitForUser();
-}
-
-bool Kaioken::affectsUserState() {
-    return true;
 }
 
 

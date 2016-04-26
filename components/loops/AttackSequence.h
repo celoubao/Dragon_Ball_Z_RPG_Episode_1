@@ -14,6 +14,15 @@ struct Phase {
     Move *move;
     Character *target;
     Character *user;
+
+    bool operator<(const Phase &phase) {
+        return move->getPriority() < phase.move->getPriority();
+    }
+
+    bool operator>(const Phase &phase) {
+        return move->getPriority() > phase.move->getPriority();
+    }
+
 };
 
 class AttackSequence : public GameSequence {

@@ -99,29 +99,22 @@ void SimpleBattleLoop::selectMove(Character &user) {
 
     int targetIndex = -1;
 
-    // Moves that affects the user's state are prioritized
-    if (selectedMove->affectsUserState()) {
-        selectedMove->use(&user, nullptr);
-        user.increaseKI();
+    if (selectedMove->needsTarget()) {
+        do {
+            targetIndex = selectTarget(user);
+            if (targetIndex == characterIndex) {
+                cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
+                targetIndex = -1;
+                waitForUser();
+            }
+        } while (targetIndex == -1);
     }
-    else {
-        if (selectedMove->needsTarget()) {
-            do {
-                targetIndex = selectTarget(user);
-                if (targetIndex == characterIndex) {
-                    cout << endl << "Really -_- ? This is a serious fight! Stay focused! " << endl << endl;
-                    targetIndex = -1;
-                    waitForUser();
-                }
-            } while (targetIndex == -1);
-        }
-        Phase *phase = new Phase();
-        phase->move = selectedMove;
-        phase->user = &user;
-        phase->target = &characters[targetIndex];
+    Phase *phase = new Phase();
+    phase->move = selectedMove;
+    phase->user = &user;
+    phase->target = &characters[targetIndex];
 
-        onNewPhase(*phase);
-    }
+    onNewPhase(*phase);
 
     goToNextCharacter();
 }

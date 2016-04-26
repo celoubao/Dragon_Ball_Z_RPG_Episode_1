@@ -18,16 +18,17 @@ public:
 
     virtual void use(Character *user, Character *target);
 
-    virtual bool affectsUserState();
-
     virtual bool needsTarget();
 
     virtual void onMoveFailed(Character *user);
+
+    virtual int getPriority();
 
 
 };
 
 void Block::use(Character *user, Character *target) {
+    cout << user->getName() << " is ready to block an attack !" << endl;
     if (getKiUsage() > user->getActualKI()) {
         onMoveFailed(user);
         waitForUser();
@@ -41,12 +42,12 @@ bool Block::needsTarget() {
     return false;
 }
 
-bool Block::affectsUserState() {
-    return true;
-}
-
 void Block::onMoveFailed(Character *user) {
     cout << user->getName() << " is unable to protect itself!" << endl;
+}
+
+int Block::getPriority() {
+    return PRIORITY_STATE_CHANGE;
 }
 
 

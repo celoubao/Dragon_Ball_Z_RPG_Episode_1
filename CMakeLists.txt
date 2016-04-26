@@ -22,6 +22,6 @@ set(SOURCE_FILES
         main.cpp components/loops/SimpleBattleLoop.h
         include/Terminal.h
         include/String.h components/loops/MainScreen.h
-        components/moves/KiBlast.h components/loops/CharacterSelectionScreen.h components/CharacterSelectionCallback.h components/moves/KiCharge.h components/loops/AttackSequence.h components/moves/Block.h components/modes/FightMode.h components/modes/FreeForAll.h components/modes/ModeSelectionScreen.h components/moves/Kaioken.h components/moves/CharacterStates.h)
+        components/moves/KiBlast.h components/loops/CharacterSelectionScreen.h components/CharacterSelectionCallback.h components/moves/KiCharge.h components/loops/AttackSequence.h components/moves/Block.h components/modes/FightMode.h components/modes/FreeForAll.h components/modes/ModeSelectionScreen.h components/moves/Kaioken.h components/moves/CharacterStates.h components/moves/MovePriorities.h)
 
 add_executable(Dragon_Ball_Z_RPG_Edition ${SOURCE_FILES})
