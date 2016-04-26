@@ -9,7 +9,7 @@ set(SOURCE_FILES
         characters/saiyans/Vegeta.h
         characters/Saiyan.h
         components/moves/DeathBeam.h
-        components/moves/SuperKamehameha.h
+        components/moves/Kamehameha.h
         components/moves/GalicGun.h
         components/Character.h
         components/Move.h

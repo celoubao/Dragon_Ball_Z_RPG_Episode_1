@@ -27,7 +27,7 @@ void GalicGun::use(Character *user, Character *target) {
 }
 
 float GalicGun::getDamagePoints() {
-    return LIFE_BAR;
+    return (float) (LIFE_BAR - (LIFE_BAR * 0.75));
 }
 
 #endif //GalicGun_H

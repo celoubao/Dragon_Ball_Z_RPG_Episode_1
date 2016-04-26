@@ -12,7 +12,7 @@ public:
     Frieza() {
 
         CharacterStats characterStats;
-        characterStats.attack = 0.6;
+        characterStats.attack = 0.2;
         characterStats.defense = 0.06;
         characterStats.bonusKI = 30;
 

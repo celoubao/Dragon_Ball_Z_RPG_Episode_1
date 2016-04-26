@@ -10,7 +10,7 @@
 #include <iomanip>
 
 #include "Move.h"
-#include "moves/SuperKamehameha.h"
+#include "moves/Kamehameha.h"
 #include "moves/DeathBeam.h"
 #include "moves/GalicGun.h"
 #include "moves/KiBlast.h"
@@ -39,7 +39,7 @@ namespace game {
         moves.push_back((new Block()));
 
         // Goku
-        moves.push_back((new SuperKamehameha()));
+        moves.push_back((new Kamehameha()));
 
         // Vegeta
         moves.push_back((new GalicGun()));

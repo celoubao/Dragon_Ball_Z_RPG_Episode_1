@@ -12,7 +12,7 @@ public:
     Vegeta() {
 
         CharacterStats characterStats;
-        characterStats.attack = 0.5;
+        characterStats.attack = 0.1;
         characterStats.defense = 0.03;
         characterStats.bonusKI = 40;
 

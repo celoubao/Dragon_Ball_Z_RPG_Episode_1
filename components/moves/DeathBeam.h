@@ -12,7 +12,7 @@ class DeathBeam : public DamageMove {
 public:
     DeathBeam() {
         name = "Death Beam";
-        kiUsage = KI_BAR;
+        kiUsage = KI_BAR / 2;
     }
 
     virtual void use(Character *user, Character *target);
@@ -26,7 +26,7 @@ void DeathBeam::use(Character *user, Character *target) {
 }
 
 float DeathBeam::getDamagePoints() {
-    return LIFE_BAR - (LIFE_BAR / 3);
+    return LIFE_BAR;
 }
 
 #endif //ERASER_CANNON_H
