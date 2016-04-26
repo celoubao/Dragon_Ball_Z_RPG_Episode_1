@@ -9,6 +9,7 @@
 #include "GameSequence.h"
 #include "../Move.h"
 
+
 struct Phase {
     Move *move;
     Character *target;
@@ -73,11 +74,10 @@ void AttackSequence::begin() {
             waitForUser();
         }
 
+        phase.user->onTurnEnded();
+
         cout << endl;
 
-        phase.user->increaseKI();
-
-        phase.user->resetState();
     }
     end();
 }

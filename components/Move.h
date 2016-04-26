@@ -113,7 +113,7 @@ void DamageMove::onAffectTargetsHP(Character *user, Character *target, double re
     float damageBonus = initialDamagePoints * user->getAttack();
     float calculatedDamagePoints = initialDamagePoints + damageBonus;
 
-    // Then we calculate how many points will be deducted from the damage points
+    // Then we calculate how many points will be substracted from the damage points
     float targetDefense = target->getDefense();
     float damageReduction = calculatedDamagePoints * targetDefense;
 

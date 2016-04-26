@@ -26,7 +26,7 @@ void DeathBeam::use(Character *user, Character *target) {
 }
 
 float DeathBeam::getDamagePoints() {
-    return LIFE_BAR;
+    return LIFE_BAR / 2;
 }
 
-#endif //ERASER_CANNON_H
+#endif //DEATH_BEAM_H

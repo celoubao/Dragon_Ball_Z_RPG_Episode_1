@@ -3,15 +3,12 @@
 
 #include <string>
 #include "../include/Terminal.h"
+#include "moves/CharacterStates.h"
 
 using namespace std;
 
 static const int LIFE_BAR = 1000;
 static const int KI_BAR = 500;
-
-static const int STATE_DEAD = -1;
-static const int STATE_IDLE = 0;
-static const int STATE_BLOCKING = 1;
 
 /**
  * Character Specifications:
@@ -64,6 +61,7 @@ protected:
 
     void initStats(CharacterStats &baseStats);
 
+    CharacterStats *getCurrentStats();
 
 public:
     Character();
@@ -98,7 +96,19 @@ public:
 
     void resetState();
 
+
+    virtual void addState(int newState);
+
+    void removeState(const int kaioken);
+
 private:
+
+public:
+
+    virtual void onTurnEnded();
+
+private:
+    int kiReduction = -1;
 
     string name;
 
@@ -106,8 +116,6 @@ private:
 
     CharacterStats *defaultStats = new CharacterStats();
     CharacterStats *currentStats = new CharacterStats();
-
-    void addState(int newState);
 
     void onPowerMaxMode();
 
@@ -226,6 +234,17 @@ void Character::onPowerMaxMode() {
 
 void Character::onNormalMode() {
     this->currentStats->attack = this->defaultStats->attack;
+}
+
+void Character::onTurnEnded() {
+}
+
+CharacterStats *Character::getCurrentStats() {
+    return currentStats;
+}
+
+void Character::removeState(int state) {
+    this->state &= ~state;
 }
 
 

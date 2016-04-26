@@ -7,6 +7,7 @@
 
 
 #include "../Move.h"
+#include "CharacterStates.h"
 
 class Block : public Move {
 public:

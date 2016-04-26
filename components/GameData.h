@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 #include <iomanip>
+#include <typeinfo>
 
 #include "Move.h"
 #include "moves/Kamehameha.h"
@@ -42,6 +43,7 @@ namespace game {
 
         // Goku
         moves.push_back((new Kamehameha()));
+//        moves.push_back(new Kaioken());
 
         // SSJ Goku
         moves.push_back(new SuperKamehameha());
@@ -75,6 +77,11 @@ namespace game {
                 moveIndex = i + j; // j == 0 ? 0 : i+j
                 list.push_back(moveIndex);
             }
+
+//            if (character->getName() == "Goku") {
+//                list.push_back(4);
+//            }
+
             moveSets[character->getName()] = list;
         }
     }

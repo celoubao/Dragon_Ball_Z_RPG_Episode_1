@@ -13,6 +13,7 @@
 #include "VersusScreen.h"
 #include "AttackSequence.h"
 
+
 class BattleLoop : public GameSequence {
 
 public:
