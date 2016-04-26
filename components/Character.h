@@ -28,6 +28,9 @@ static const int STATE_BLOCKING = 1;
  *                          to be used. If the user attempt to use a move that requires more KI than his/her character has
  *                          the move will fail.
  *
+ *                          When a Character's KI is at its maximum value, the user enter's in Power Max.
+ *                          In this mode, the user's attack increases by 5%
+ *
  * - Bonus KI:       Amount of KI points that are added to the character's current KI points at the end of each turn
  *                          This value may vary depending on the character
  */
@@ -36,7 +39,7 @@ struct CharacterStats {
     float attack = 0;
     float defense = 0;
     double actualHP = 0;
-    long maxHP = LIFE_BAR * 2;
+    long maxHP = LIFE_BAR * 2 + (LIFE_BAR / 2);
     long actualKI = KI_BAR;
     long maxKI = KI_BAR * 3;
     long bonusKI = 0;
@@ -105,6 +108,10 @@ private:
     CharacterStats *currentStats = new CharacterStats();
 
     void addState(int newState);
+
+    void onPowerMaxMode();
+
+    void onNormalMode();
 };
 
 Character::Character() {
@@ -162,9 +169,13 @@ void Character::setActualKI(long ki, bool printMessage) {
         actualKI = ki;
         if (actualKI >= maxKI) {
             actualKI = maxKI;
+            onPowerMaxMode();
             if (printMessage) {
                 cout << getName() << " is in Power Max Mode!" << endl;
             }
+        }
+        else {
+            onNormalMode();
         }
 
         this->currentStats->actualKI = actualKI;
@@ -207,6 +218,14 @@ void Character::resetState() {
 void Character::initStats(CharacterStats &baseStats) {
     *this->defaultStats = baseStats;
     resetCharacterStats();
+}
+
+void Character::onPowerMaxMode() {
+    this->currentStats->attack += 0.05;
+}
+
+void Character::onNormalMode() {
+    this->currentStats->attack = this->defaultStats->attack;
 }
 
 
