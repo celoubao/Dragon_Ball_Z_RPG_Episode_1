@@ -12,11 +12,14 @@
 class Goku : public Saiyan {
 public:
     Goku() {
+
+        CharacterStats characterStats;
+        characterStats.attack = 0.8;
+        characterStats.defense = 0.06;
+        characterStats.bonusKI = 25;
+
         setName("SSJ Goku");
-        setAttack(0.8);
-        setDefense(0.06);
-        setBonusKIPoints(25);
-        resetCharacterStats();
+        initStats(characterStats);
     }
 };
 

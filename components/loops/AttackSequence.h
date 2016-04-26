@@ -25,10 +25,7 @@ public:
 
     virtual void end();
 
-    vector<Character> *getGraveyard();
-
 private:
-    vector<Character> *graveyard;
     vector<Phase> *phases;
     vector<Character> *characters;
 };
@@ -37,10 +34,6 @@ AttackSequence::AttackSequence(vector<Phase> &phases, vector<Character> &charact
     this->graveyard = new vector<Character>();
     this->phases = &phases;
     this->characters = &characters;
-}
-
-vector<Character> *AttackSequence::getGraveyard() {
-    return graveyard;
 }
 
 void AttackSequence::begin() {
@@ -64,18 +57,14 @@ void AttackSequence::begin() {
 
             waitForUser();
 
-            if (phase.target->getActualHP() <= 0) {
+            if (phase.target->getState() == STATE_DEAD) {
                 cout << phase.target->getName() << " is unable to fight!" << endl;
-                characters->erase(characters->begin() + phase.targetIndex);
-                graveyard->push_back(*phase.target);
                 waitForUser();
                 cout << endl;
             }
 
-            if (phase.user->getActualHP() <= 0) {
+            if (phase.user->getActualHP() == STATE_DEAD) {
                 cout << phase.user->getName() << " is unable to fight!" << endl;
-                graveyard->push_back(*phase.user);
-                characters->erase(characters->begin() + phase.userIndex);
                 waitForUser();
                 cout << endl;
             }

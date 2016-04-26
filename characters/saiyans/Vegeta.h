@@ -10,11 +10,14 @@
 class Vegeta : public Saiyan {
 public:
     Vegeta() {
+
+        CharacterStats characterStats;
+        characterStats.attack = 0.5;
+        characterStats.defense = 0.03;
+        characterStats.bonusKI = 40;
+
         setName("Vegeta");
-        setAttack(0.5);
-        setDefense(0.03);
-        setBonusKIPoints(40);
-        resetCharacterStats();
+        initStats(characterStats);
     }
 };
 

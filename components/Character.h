@@ -9,6 +9,7 @@ using namespace std;
 static const int LIFE_BAR = 1000;
 static const int KI_BAR = 500;
 
+static const int STATE_DEAD = -1;
 static const int STATE_IDLE = 0;
 static const int STATE_BLOCKING = 1;
 
@@ -27,22 +28,38 @@ static const int STATE_BLOCKING = 1;
  *                          to be used. If the user attempt to use a move that requires more KI than his/her character has
  *                          the move will fail.
  *
- * - Bonus KI Points:       Amount of KI points that are added to the character's current KI points at the end of each turn
+ * - Bonus KI:       Amount of KI points that are added to the character's current KI points at the end of each turn
  *                          This value may vary depending on the character
  */
+
+struct CharacterStats {
+    float attack = 0;
+    float defense = 0;
+    double actualHP = 0;
+    long maxHP = LIFE_BAR * 2;
+    long actualKI = KI_BAR;
+    long maxKI = KI_BAR * 3;
+    long bonusKI = 0;
+
+    CharacterStats &operator=(const CharacterStats &characterStats) {
+        this->attack = characterStats.attack;
+        this->defense = characterStats.defense;
+        this->actualHP = characterStats.actualHP;
+        this->maxHP = characterStats.maxHP;
+        this->actualKI = characterStats.actualKI;
+        this->maxKI = characterStats.maxKI;
+        this->bonusKI = characterStats.bonusKI;
+        return *this;
+    }
+
+};
+
 class Character {
 protected:
-    void setMaxHP(long maxHP);
-
-    void setMaxKI(long maxKI);
-
-    void setDefense(float defense);
 
     void setName(string name);
 
-    void setAttack(float APS);
-
-    void setBonusKIPoints(long bonusKIPoints);
+    void initStats(CharacterStats &baseStats);
 
 
 public:
@@ -79,28 +96,19 @@ public:
     void resetState();
 
 private:
+
     string name;
-    long maxHP;
-    long actualHP;
-
-    long actualKI = KI_BAR;
-    long maxKI;
-    long bonusKiPoints;
-
-    float defense;
-    float attack;
 
     int state = STATE_IDLE;
+
+    CharacterStats *defaultStats = new CharacterStats();
+    CharacterStats *currentStats = new CharacterStats();
+
+    void addState(int newState);
 };
 
 Character::Character() {
-    setMaxHP(LIFE_BAR * 2);
-    setMaxKI(KI_BAR * 3);
     resetCharacterStats();
-}
-
-void Character::setAttack(float attack) {
-    this->attack = attack;
 }
 
 
@@ -109,16 +117,10 @@ void Character::setName(string name) {
 }
 
 void Character::resetCharacterStats() {
-    this->actualHP = this->maxHP;
-    this->actualKI = KI_BAR;
-}
-
-void Character::setMaxHP(long maxHP) {
-    this->maxHP = maxHP;
-}
-
-void Character::setDefense(float defense) {
-    this->defense = defense;
+    resetState();
+    this->currentStats = this->defaultStats;
+    this->currentStats->actualKI = defaultStats->maxKI / 2;
+    this->currentStats->actualHP = this->defaultStats->maxHP;
 }
 
 string Character::getName() {
@@ -126,38 +128,46 @@ string Character::getName() {
 }
 
 long Character::getActualHP() {
-    return actualHP;
+    return (long) this->currentStats->actualHP;
 }
 
 float Character::getDefense() {
-    return defense;
+    return this->currentStats->defense;
 }
 
 float Character::getAttack() {
-    return attack;
+    return this->currentStats->attack;
 }
 
 void Character::setActualHP(double hp) {
-    this->actualHP = hp;
+    this->currentStats->actualHP = hp;
+    if (this->currentStats->actualHP <= 0) {
+        this->state = STATE_DEAD;
+    }
 }
 
 long Character::getMaxHP() {
-    return maxHP;
+    return this->currentStats->maxHP;
 }
 
 long Character::getActualKI() {
-    return actualKI;
+    return this->currentStats->actualKI;
 }
 
 void Character::setActualKI(long ki, bool printMessage) {
+    long actualKI = this->currentStats->actualKI;
+    long maxKI = this->currentStats->maxKI;
+
     if (actualKI < maxKI || ki < maxKI) {
-        this->actualKI = ki;
+        actualKI = ki;
         if (actualKI >= maxKI) {
             actualKI = maxKI;
             if (printMessage) {
                 cout << getName() << " is in Power Max Mode!" << endl;
             }
         }
+
+        this->currentStats->actualKI = actualKI;
     }
     else {
         if (printMessage) {
@@ -166,20 +176,12 @@ void Character::setActualKI(long ki, bool printMessage) {
     }
 }
 
-void Character::setMaxKI(long maxKI) {
-    this->maxKI = maxKI;
-}
-
 long Character::getMaxKI() {
-    return this->maxKI;
+    return this->currentStats->maxKI;
 }
 
 long Character::getBonusKIPoints() {
-    return bonusKiPoints;
-}
-
-void Character::setBonusKIPoints(long bonusKIPoints) {
-    this->bonusKiPoints = bonusKIPoints;
+    return this->currentStats->bonusKI;
 }
 
 void Character::increaseKI() {
@@ -194,8 +196,17 @@ void Character::setState(int newState) {
     state = newState;
 }
 
+void Character::addState(int newState) {
+    state = state | newState;
+}
+
 void Character::resetState() {
     state = STATE_IDLE;
+}
+
+void Character::initStats(CharacterStats &baseStats) {
+    *this->defaultStats = baseStats;
+    resetCharacterStats();
 }
 
 

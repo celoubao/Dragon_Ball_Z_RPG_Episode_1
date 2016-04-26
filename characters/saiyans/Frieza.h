@@ -7,14 +7,17 @@
 
 #include "../Saiyan.h"
 
-class Frieza : public Saiyan {
+class Frieza : public Character {
 public:
     Frieza() {
+
+        CharacterStats characterStats;
+        characterStats.attack = 0.6;
+        characterStats.defense = 0.06;
+        characterStats.bonusKI = 30;
+
         setName("Frieza");
-        setAttack(0.7);
-        setDefense(0.06);
-        setBonusKIPoints(30);
-        resetCharacterStats();
+        initStats(characterStats);
     }
 };
 

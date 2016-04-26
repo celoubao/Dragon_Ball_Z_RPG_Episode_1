@@ -48,7 +48,7 @@ void Move::use(Character *user, Character *target) {
         switch (target->getState()) {
             case STATE_BLOCKING:
                 reductionPercentage = 0.5f;
-                cout << target->getName() << " is protecting itself!" << endl;
+                cout << target->getName() << " is blocking this attack!" << endl;
                 break;
             default:
                 cout << user->getName() << " used " << name << "!" << endl;

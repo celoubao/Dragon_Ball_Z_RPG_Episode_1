@@ -108,9 +108,6 @@ void BattleLoop::onNewPhase(Phase &phase) {
 
 void BattleLoop::onWinner(Character &character) {
     cout << character.getName() << " won!" << endl;
-    for (Character dead: *attackSequence->getGraveyard()) {
-        characters.push_back(dead);
-    }
     waitForUser();
 }
 
