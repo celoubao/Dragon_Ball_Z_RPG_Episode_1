@@ -31,7 +31,6 @@ private:
 };
 
 AttackSequence::AttackSequence(vector<Phase> &phases, vector<Character> &characters) {
-    this->graveyard = new vector<Character>();
     this->phases = &phases;
     this->characters = &characters;
 }
