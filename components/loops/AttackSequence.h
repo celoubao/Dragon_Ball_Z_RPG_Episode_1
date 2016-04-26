@@ -13,8 +13,6 @@ struct Phase {
     Move *move;
     Character *target;
     Character *user;
-    int targetIndex;
-    int userIndex;
 };
 
 class AttackSequence : public GameSequence {
@@ -27,12 +25,10 @@ public:
 
 private:
     vector<Phase> *phases;
-    vector<Character> *characters;
 };
 
 AttackSequence::AttackSequence(vector<Phase> &phases, vector<Character> &characters) {
     this->phases = &phases;
-    this->characters = &characters;
 }
 
 void AttackSequence::begin() {
@@ -43,7 +39,7 @@ void AttackSequence::begin() {
     for (Phase phase: *phases) {
 
         // We skip the phase if the user is dead
-        if (phase.userIndex >= characters->size() || phase.user != &characters->at(phase.userIndex)) {
+        if (phase.user->getState() == STATE_DEAD) {
             continue;
         }
 
@@ -61,6 +57,9 @@ void AttackSequence::begin() {
                 waitForUser();
                 cout << endl;
             }
+            else {
+                phase.target->resetState();
+            }
 
             if (phase.user->getActualHP() == STATE_DEAD) {
                 cout << phase.user->getName() << " is unable to fight!" << endl;
@@ -68,7 +67,6 @@ void AttackSequence::begin() {
                 cout << endl;
             }
 
-            phase.target->resetState();
         }
         else {
             move->use(phase.user, phase.target);

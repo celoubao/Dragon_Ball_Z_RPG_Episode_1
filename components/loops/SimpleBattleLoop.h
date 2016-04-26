@@ -119,8 +119,6 @@ void SimpleBattleLoop::selectMove(Character &user) {
         phase->move = selectedMove;
         phase->user = &user;
         phase->target = &characters[targetIndex];
-        phase->targetIndex = targetIndex;
-        phase->userIndex = characterIndex;
 
         onNewPhase(*phase);
     }

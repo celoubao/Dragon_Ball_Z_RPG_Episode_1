@@ -66,9 +66,22 @@ void BattleLoop::goToNextCharacter() {
 
         phases.clear();
 
+        int survivors = 0;
+        Character winner;
 
-        if (characters.size() == 1) {
-            onWinner(characters[0]);
+        for (Character character: characters) {
+            if (character.getState() != STATE_DEAD) {
+                winner = character;
+                survivors += 1;
+            }
+        }
+
+        if (survivors == 1) {
+            onWinner(winner);
+            end();
+            return;
+        }
+        else if (survivors == 0) {
             end();
             return;
         }
