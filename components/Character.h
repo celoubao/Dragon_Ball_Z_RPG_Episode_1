@@ -29,7 +29,7 @@ static const int STATE_BLOCKING = 1;
  *                          the move will fail.
  *
  *                          When a Character's KI is at its maximum value, the user enter's in Power Max.
- *                          In this mode, the user's attack increases by 5%
+ *                          In this mode, the user's attack increases by 2%
  *
  * - Bonus KI:       Amount of KI points that are added to the character's current KI points at the end of each turn
  *                          This value may vary depending on the character
@@ -221,7 +221,7 @@ void Character::initStats(CharacterStats &baseStats) {
 }
 
 void Character::onPowerMaxMode() {
-    this->currentStats->attack += 0.05;
+    this->currentStats->attack += 0.02;
 }
 
 void Character::onNormalMode() {

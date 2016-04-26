@@ -2,10 +2,10 @@
 // Created by Charles-Eugene Loubao on 4/7/16.
 //
 
-#ifndef BROLY_H
-#define BROLY_H
+#ifndef FRIEZA_H
+#define FRIEZA_H
 
-#include "../Saiyan.h"
+#include "Saiyan.h"
 
 class Frieza : public Character {
 public:
@@ -21,4 +21,4 @@ public:
     }
 };
 
-#endif //GOKU_H
+#endif //FRIEZA_H

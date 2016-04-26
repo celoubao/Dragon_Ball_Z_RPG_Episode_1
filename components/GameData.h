@@ -14,12 +14,14 @@
 #include "moves/DeathBeam.h"
 #include "moves/GalicGun.h"
 #include "moves/KiBlast.h"
-#include "../characters/saiyans/Frieza.h"
+#include "../characters/Frieza.h"
 #include "../characters/saiyans/Vegeta.h"
 #include "../characters/saiyans/Goku.h"
 #include "moves/KiCharge.h"
 #include "moves/Block.h"
 #include "modes/FightMode.h"
+#include "moves/SuperKamehameha.h"
+#include "../characters/saiyans/SSJGoku.h"
 
 using namespace std;
 
@@ -41,6 +43,9 @@ namespace game {
         // Goku
         moves.push_back((new Kamehameha()));
 
+        // SSJ Goku
+        moves.push_back(new SuperKamehameha());
+
         // Vegeta
         moves.push_back((new GalicGun()));
 
@@ -51,6 +56,7 @@ namespace game {
     void initializeCharacterList() {
 
         characters.push_back((new Goku()));
+        characters.push_back((new SSJGoku()));
         characters.push_back((new Vegeta()));
         characters.push_back((new Frieza()));
 

@@ -2,25 +2,25 @@
 // Created by Charles-Eugene Loubao on 4/7/16.
 //
 
-#ifndef GOKU_H
-#define GOKU_H
+#ifndef SSJ_GOKU_H
+#define SSJ_GOKU_H
 
 #include "../Saiyan.h"
 #include "../../components/moves/Kamehameha.h"
 #include "../../components/moves/DeathBeam.h"
 
-class Goku : public Saiyan {
+class SSJGoku : public Saiyan {
 public:
-    Goku() {
+    SSJGoku() {
 
         CharacterStats characterStats;
-        characterStats.attack = 0.3;
-        characterStats.defense = 0.06;
-        characterStats.bonusKI = 10;
+        characterStats.attack = 0.5;
+        characterStats.defense = 0.07;
+        characterStats.bonusKI = 30;
 
-        setName("Goku");
+        setName("SSJ Goku");
         initStats(characterStats);
     }
 };
 
-#endif //GOKU_H
+#endif //SSJ_GOKU_H
