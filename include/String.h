@@ -2,6 +2,7 @@
 #define DRAGON_BALL_Z_RPG_EDITION_STRING_H
 
 #include <string>
+#include <cctype>
 
 using namespace std;
 

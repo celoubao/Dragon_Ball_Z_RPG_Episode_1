@@ -71,22 +71,22 @@ void BattleLoop::goToNextCharacter() {
 
         phases.clear();
 
-        int survivors = 0;
+        int remainingCharacters = 0;
         Character winner;
 
         for (Character character: characters) {
             if (character.getState() != STATE_DEAD) {
                 winner = character;
-                survivors += 1;
+                remainingCharacters += 1;
             }
         }
 
-        if (survivors == 1) {
+        if (remainingCharacters == 1) {
             onWinner(winner);
             end();
             return;
         }
-        else if (survivors == 0) {
+        else if (remainingCharacters == 0) {
             end();
             return;
         }
