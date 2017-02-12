@@ -1,0 +1,5 @@
+pipeline:
+  build:
+    image: gcc
+    commands:
+      - make main
